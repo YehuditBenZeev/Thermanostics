@@ -1,7 +1,9 @@
 import cv2
 import numpy as np
+import argparse
 
 
+# Displaying an image
 def show_pic(image):
     window_name = 'Image'
     cv2.imshow(window_name, image)
