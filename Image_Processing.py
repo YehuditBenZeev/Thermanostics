@@ -65,7 +65,6 @@ class hot_spot:
         self.location = location
 
 
-
 ####################################################
 ### class  Image_Processing ###
 a = Image_Processing('Im1.jpg')
@@ -74,5 +73,6 @@ a.edge_detecting()
 
 #######################################################
 ### class  Hot_Spot ###
+
 b= palm(im)
 
