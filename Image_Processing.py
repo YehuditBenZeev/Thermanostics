@@ -20,15 +20,20 @@ class Image_Processing :
     def convert_image_to_gray_scale(self):
         self.image = self.image[:,:,1] # green layer
         show_pic(self.image)
-        print(self.image)
+       #print(self.image)
+        print(self.image.shape)
+        self.image = cv2.bilateralFilter(self.image, 11, 17, 17)
         print(self.image.shape)
 
         height, width = self.image.shape
 
         for i in range(1, height-1):
             for j in range(1, width-1):
-                if (self.image[i][j]<20) and ((self.image[i+1][j+1]<10) and (self.image[i-1][j-1]<10) ):
+                if (self.image[i][j]<20) and ((self.image[i+1][j+1]<10) and (self.image[i-1][j-1]<10)):
                     self.image[i][j] = 0
+
+
+       # show_pic(self.image)
 
         #zeroing first & last column
         self.image[:,:1] = 0
@@ -38,9 +43,9 @@ class Image_Processing :
         self.image[:1,:] = 0
         self.image[-1:,:] = 0
 
-        print(self.image)
-        show_pic(self.image)
-        print(self.image[200:201])
+       # print(self.image)
+        #show_pic(self.image)
+        print(self.image[269:270])
 
         return self.image
 
