@@ -21,9 +21,9 @@ class Image_Processing :
         self.image = self.image[:,:,1] # green layer
         show_pic(self.image)
        #print(self.image)
-        print(self.image.shape)
+       ##### print(self.image.shape)
         self.image = cv2.bilateralFilter(self.image, 11, 17, 17)
-        print(self.image.shape)
+      ##  print(self.image.shape)
 
         height, width = self.image.shape
 
@@ -45,7 +45,7 @@ class Image_Processing :
 
        # print(self.image)
         #show_pic(self.image)
-        print(self.image[269:270])
+        ####print(self.image[269:270])
 
         return self.image
 
@@ -59,9 +59,16 @@ class palm:
 
     def __init__(self, processed_image):
         self.image = processed_image
-        self.np.array #how to make it dynamic ??????
+      #  self.np.array #how to make it dynamic ??????
         show_pic(self.image)
 
+    def find_max_for_palm(self):
+
+        show_pic(self.image)
+
+        (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(self.image)
+        print (minVal, maxVal, minLoc, maxLoc)
+        ss = self.image[maxLoc -50:maxLoc.x+50,maxLoc.y-50:maxLoc.y+50]
 
 class hot_spot:
 
@@ -69,15 +76,18 @@ class hot_spot:
         self.value = value
         self.location = location
 
+  #  def detect_hot_spot(self):
+
+
 
 ####################################################
 ### class  Image_Processing ###
 a = Image_Processing('Im1.jpg')
 im = a.convert_image_to_gray_scale()
-a.edge_detecting()
+#a.edge_detecting()
 
 #######################################################
 ### class  Hot_Spot ###
 
 b= palm(im)
-
+b.find_max_for_palm()
