@@ -70,6 +70,7 @@ class palm:
         print (minVal, maxVal, minLoc, maxLoc)
         ss = self.image[maxLoc -50:maxLoc.x+50,maxLoc.y-50:maxLoc.y+50]
 
+
 class hot_spot:
 
     def __init__(self , value , location):
