@@ -1,92 +1,15 @@
 import cv2
 import numpy as np
 import argparse
-
-
-# Displaying an image
-def show_pic(image , name):
-    window_name = name
-    cv2.imshow(window_name, image)
-    cv2.waitKey(0)
-
-def edge_detecting(image_path):
-    im = cv2.imread(image_path)
-    im = cv2.Canny(im, 350, 500)
-    return im
-
-class Image_Processing:
-
-    def __init__(self, image_path):
-        ########## self.image_path = image_path
-        self.image = cv2.imread(image_path)
-
-    def black_border(self):
-        self.image = self.image[:,:,1] # green layer
-       # mask = self.image
-        border = cv2.bilateralFilter(self.image, 11, 17, 17)
-        mask = cv2.Canny(border, 350, 500)
-
-        rows, columns = self.image.shape
-        show_pic(self.image,"edge" )
-
-        for j in range(1, rows - 1):
-           for i in range(1, columns - 1):
-                if mask[j][i] != 0:
-                    self.image[j][i] = 0
-                    mask[j][i] = 0
-                else: mask[j][i] = 255
-
-        show_pic(mask,"edge" )
-        show_pic(self.image,"edge" )
-        mask = cv2.Canny(border, 350, 500)
-        show_pic(mask,"edge" )
-
-    # convert image to gray scale
-    def convert_image_to_gray_scale(self):
-        self.image = self.image[:,:,1] # green layer
-       # show_pic(self.image, "image")
-       #print(self.image)
-       ##### print(self.image.shape)
-        self.image = cv2.bilateralFilter(self.image, 11, 17, 17)
-        show_pic(self.image, "image")
-
-        ##  print(self.image.shape)
-
-        height, width = self.image.shape
-
-        for i in range(1, height-1):
-            for j in range(1, width-1):
-                if (self.image[i][j]<20) and ((self.image[i+1][j+1]<10) and (self.image[i-1][j-1]<10)):
-                    self.image[i][j] = 0
-
-        show_pic(self.image, "image")
-
-       # show_pic(self.image)
-
-        #zeroing first & last column
-        self.image[:,:1] = 0
-        self.image[:,-1:] = 0
-
-        #zeroing first & last column
-        self.image[:1,:] = 0
-        self.image[-1:,:] = 0
-
-       # print(self.image)
-        #show_pic(self.image)
-        ####print(self.image[269:270])
-
-        return self.image
-
-    # detects edge of palm
-
-
+import Finger as f
+import Image_Processing as ip
 
 # will detect hot spots
-'''class Palm:
+class Palm:
 
     def __init__(self, processed_image, path):
         self.image = processed_image
-        self.black_white_image = self.edge_detecting(path)
+        self.black_white_image = ip.edge_detecting(path)
       #  self.np.array #how to make it dynamic ??????
         self.finger1 = f.Finger()
         self.finger2 = f.Finger()
@@ -96,10 +19,6 @@ class Image_Processing:
 
       # show_pic(self.image,"image")
 
-    def edge_detecting(self , image_path):
-        im = cv2.imread(image_path)
-        im = cv2.Canny(im, 350, 500)
-        return im
 
     def find_max_for_palm(self): ##################
 
@@ -131,22 +50,22 @@ class Image_Processing:
         cv2.circle(self.image, (self.finger1.bottom_2[1], self.finger1.bottom_2[0]), 4, (255, 0, 0), 2)
         print("127 ", self.finger1.bottom_2[1], self.finger1.bottom_2[0])
 
-        show_pic(self.image, "finger1")
+        ip.show_pic(self.image, "finger1")
 
         cv2.circle(self.image, (self.finger2.top_1[1], self.finger2.top_1[0]), 4, (255, 0, 0), 2)
         cv2.circle(self.image, (self.finger2.top_2[1], self.finger2.top_2[0]), 4, (255, 0, 0), 2)
         cv2.circle(self.image, (self.finger2.bottom_2[1], self.finger2.bottom_2[0]), 4, (255, 0, 0), 2)
-        show_pic(self.image, "finger2")
+        ip.show_pic(self.image, "finger2")
 
         cv2.circle(self.image, (self.finger3.top_1[1], self.finger3.top_1[0]), 4, (255, 0, 0), 2)
         cv2.circle(self.image, (self.finger3.top_2[1], self.finger3.top_2[0]), 4, (255, 0, 0), 2)
         cv2.circle(self.image, (self.finger3.bottom_2[1], self.finger3.bottom_2[0]), 4, (255, 0, 0), 2)
-        show_pic(self.image, "finger3")
+        ip.show_pic(self.image, "finger3")
 
         cv2.circle(self.image, (self.finger4.top_1[1], self.finger4.top_1[0]), 4, (255, 0, 0), 2)
         cv2.circle(self.image, (self.finger4.top_2[1], self.finger4.top_2[0]), 4, (255, 0, 0), 2)
         cv2.circle(self.image, (self.finger4.bottom_2[1], self.finger4.bottom_2[0]), 4, (255, 0, 0), 2)
-        show_pic(self.image, "finger4")
+        ip.show_pic(self.image, "finger4")
 
         cv2.circle(self.image, (self.finger5.top_1[1], self.finger5.top_1[0]), 4, (255, 0, 0), 2)
         cv2.circle(self.image, (self.finger5.top_2[1], self.finger5.top_2[0]), 4, (255, 0, 0), 2)
@@ -263,7 +182,7 @@ class Image_Processing:
         finger_width = 0
         print(rows, columns)
 
-        show_pic(self.black_white_image, "image")
+        ip.show_pic(self.black_white_image, "image")
 
         for j in range(0, rows-1):
             for i in range(0, columns-1):
@@ -299,35 +218,4 @@ class Image_Processing:
                         break
 
         self.draw_on_point()
-        show_pic(self.image, "image")'''
-
-'''class Finger:
-    def __init__(self):
-        self.top_1 = np.array([0,0])
-        self.top_2 =  np.array([0,0])
-        self.bottom_1 =  np.array([0,0])
-        self.bottom_2 =  np.array([0,0])'''
-
-'''class Hot_Spot:
-
-    def __init__(self , value , location):
-        self.max_value = value
-        self.location = location'''
-
-
-
-
-
-'''''####################################################
-### class  Image_Processing ###
-link = 'Im1.jpg'
-a = Image_Processing(link)
-#a.black_border()
-im = a.convert_image_to_gray_scale()
-
-#######################################################
-### class  Hot_Spot ###
-
-b= Palm(im , link)
-#b.find_max_for_palm()
-b.detect_fingers()'''
+        ip.show_pic(self.image, "image")
