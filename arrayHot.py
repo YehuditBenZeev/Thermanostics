@@ -19,7 +19,8 @@ def showPic(image):
 path = "Im1.jpg"
 src = cv2.imread(path)
 showPic(src)
-#cv2.cvtColor(src,cv2.COLOR_BGR2GRAY)‏
+image = src[:,:,1] # green layer
+showPic(image)
 
 
 """
@@ -51,10 +52,10 @@ cv2.imread(mask.save(path))
 img = cv2.imread(path)
 h = img.shape[0]
 w = img.shape[1]
-temp = img[0][0]
+temp = image[0][0]
 for i in range(0, h):
     for j in range(0, w):
-      x=img[i][j]
+      x=image[i][j]
       print(x)
 
 
