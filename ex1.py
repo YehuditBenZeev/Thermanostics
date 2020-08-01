@@ -2,13 +2,13 @@ import numpy as np
 #import skimage
 import cv2
 #from PIL import Image, ImageFilter
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 #from skimage import data, io, filters
 
 #from pyimagesearch import imutils
-from skimage import exposure
-import argparse
-import imutils
+#from skimage import exposure
+#import argparse
+#import imutils
 import scipy
 from scipy import ndimage
 
