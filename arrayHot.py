@@ -52,11 +52,18 @@ cv2.imread(mask.save(path))
 img = cv2.imread(path)
 h = img.shape[0]
 w = img.shape[1]
-temp = image[0][0]
-for i in range(0, h):
-    for j in range(0, w):
-      x=image[i][j]
-      print(x)
+
+
+
+
+def fin(p1,p2,h,w):
+    temp = 0
+    for i in range(p1, h):
+        for j in range(p2, w):
+            x = image[i][j]
+            if x > temp:
+                temp = image[i][j]
+    return temp
 
 
 
