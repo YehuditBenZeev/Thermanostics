@@ -22,33 +22,6 @@ showPic(src)
 image = src[:,:,1] # green layer
 showPic(image)
 
-
-"""
-count = 1
-first = 0
-temp = np.array([0,0]) # holds: row , column
-rows, columns=np.size
-
-
-finger_width = 0
-
-#print(rows, columns)
-
-
-for j in range(0, rows-1):
-    for i in range(0, columns-1):
-        if path[j][i]==0 and path[j][i+1]!=0 :
-            print("ll")
-           #print(path[i][j])
-           """
-"""
-from PIL import Image
-image = Image.open(path)
-mask=image.convert("L")
-th=150 # the value has to be adjusted for an image of interest
-mask = mask.point(lambda i: i < th and 255)
-cv2.imread(mask.save(path))
-"""
 #Find hotspots by regions
 def fin(p1,p2,h,w):
     temp = 0
