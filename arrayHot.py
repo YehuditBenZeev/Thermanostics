@@ -49,13 +49,7 @@ th=150 # the value has to be adjusted for an image of interest
 mask = mask.point(lambda i: i < th and 255)
 cv2.imread(mask.save(path))
 """
-img = cv2.imread(path)
-h = img.shape[0]
-w = img.shape[1]
-
-
-
-
+#Find hotspots by regions
 def fin(p1,p2,h,w):
     temp = 0
     for i in range(p1, h):
@@ -64,6 +58,17 @@ def fin(p1,p2,h,w):
             if x > temp:
                 temp = image[i][j]
     return temp
+
+def ScanImage(h,w):
+   print(fin(0,0,(int)(h/10),(int)(w/10)))
+
+
+
+
+img = cv2.imread(path)
+h = img.shape[0]
+w = img.shape[1]
+ScanImage(h,w)
 
 
 
