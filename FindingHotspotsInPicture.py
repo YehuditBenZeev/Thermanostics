@@ -31,7 +31,7 @@ def fin(p1,p2,h,w):
             if x > temp:
                 temp = image[i][j]
     return temp
-
+#scan all picture
 def ScanImage(h,w):
    print(fin(0,0,(int)(h/10),(int)(w/10)))
 
