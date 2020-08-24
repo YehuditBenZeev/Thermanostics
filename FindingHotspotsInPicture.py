@@ -22,9 +22,9 @@ def showPic(image):
 
 path = "Im1.jpg"
 src = cv2.imread(path)
-#showPic(src)
+showPic(src)
 image = src[:,:,1] # green layer
-#showPic(image)
+showPic(image)
 
 #Find hotspots by regions
 def fin(p1,p2,h,w):
@@ -42,40 +42,50 @@ def ScanImage(h,w):
 def passOnImage(h, w):
     print(h,"h",w,"w")
     arr=[]
+    arrI=[]
+    arrJ=[]
     flag1 =False
     flag2 = False
     flag3 = False
     flag4 = False
-    for i in range(1, 100 - 1):
-        for j in range(1, 100 - 1):
-            print(i,j,"____")
-            print(image[i][j],"image")
+    for i in range(1, h - 1):
+        for j in range(1, w - 1):
             if i-1 >0:
-                print("1111111111",image[i-1][j],image[i][j])
                 if image[i-1][j]<image[i][j]:
                     flag1=True
-                print(flag1)
             if j-1 >0:
-                #print("2222222222222")
                 if image[i][j-1]<image[i][j]:
                     flag2=True
 
             if i+1 < h:
-                #print("333333333333")
                 if image[i+1][j]<image[i][j]:
                     flag3=True
 
             if j+1 < w:
-                #print("44444444444")
                 if image[i][j+1]<image[i][j]:
                     flag4=True
-            if(flag1 & flag2 & flag3 & flag4 ):
-                arr.append(image[i][j])
+            if flag1 & flag2 & flag3 & flag4 :
+                if image[i][j]>40:
+                    arr.append(image[i][j])
+                    arrI.append(i)
+                    arrJ.append(j)
+                    print(i,"___",j,"___",image[i][j])
+
+
                 flag1=False
                 flag2=False
                 flag3=False
                 flag4=False
-        print(arr,"arr",i)
+    print(arr,"arr")
+    print(arrI,"arrI")
+    print(arrJ,"arrJ")
+    for i in range(len(arr)):
+        if arrI[i]>50:
+            cv2.circle(src, ( arrJ[i],arrI[i]), 4, (255, 128, 0), 2)
+            print(arrI[i],arrJ[i])
+            break
+
+    showPic(image)
 
 
 
