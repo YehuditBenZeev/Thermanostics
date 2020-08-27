@@ -10,14 +10,14 @@ def show_pic(image , name):
     cv2.waitKey(0)
 
 def edge_detecting(image_path):
-    im = cv2.imread(image_path)
-    im = cv2.Canny(im, 350, 500)
-    return im
+    image = cv2.imread(image_path)
+    image = cv2.Canny(image, 350, 500)
+    return image
 
 class Image_Processing:
-
+    print("18")
     def __init__(self, image_path):
-        ########## self.image_path = image_path
+        #########ma# self.image_path = image_path
         self.image = cv2.imread(image_path)
 
     def black_border(self):
@@ -316,9 +316,9 @@ class Image_Processing:
 
 
 
+'''
 
-
-'''''####################################################
+####################################################
 ### class  Image_Processing ###
 link = 'Im1.jpg'
 a = Image_Processing(link)
@@ -330,4 +330,5 @@ im = a.convert_image_to_gray_scale()
 
 b= Palm(im , link)
 #b.find_max_for_palm()
-b.detect_fingers()'''
+#b.detect_fingers()
+'''
