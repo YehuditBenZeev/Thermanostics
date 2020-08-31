@@ -40,14 +40,16 @@ def fin(p1,p2,h,w,valu):
         return 0, 0, 0
     else:
         temp = valu
+        #print(temp,"temp")
         for i in range(p1, h):
             for j in range(p2, w):
                 x = image[i][j]
-                if x > temp:
+                if x > temp & image[i][j]>40:
                     temp = image[i][j]
                     io=i
                     jo=j
-        #print(temp,io,j,image[i][j],"fin")
+
+        #print(temp,io,jo,image[i][j],"fin")
         return temp,io,jo
 #scan all picture
 def ScanImage(i,j,k,valu):
@@ -183,16 +185,23 @@ def passOnImage(h, w,k,temp):
 #     #         break
 #     showPic(image)
 
+
+
+
 def tryy(arr ,arrJ,arrI):
     arr1=[]
     arr2=[]
     arr3 = []
     for i in range(len(arrI)):
+       print(arrI[i], arrJ[i], arr[i])
        w1, w2, w3 = ScanImage(arrI[i], arrJ[i], 10, arr[i])
+       print(w1,"__",w2,"---",w3)
        arr1.append(w1)
        arr2.append(w2)
        arr3.append(w3)
-       cv2.circle(src, (w3, w2), 4, (255, 128, 0), 2)
+       if w1!=0 |w2!=0|w3!=0:
+        cv2.circle(src, (w3, w2), 4, (255, 128, 0), 2)
+
     showPic(image)
     return arr1,arr2,arr3
 
@@ -213,7 +222,7 @@ arr1,arr2,arr3=tryy(arr,arrJ,arrI)
 print(arr1,"arr1")
 print(arr2,"arr2")
 print(arr3,"arr3")
-arr1,arr2,arr3=tryy(arr1,arr2,arr3)
+#arr1,arr2,arr3=tryy(arr1,arr2,arr3)
 # print(arr1,"arr1")
 # print(arr2,"arr2")
 # print(arr3,"arr3")
