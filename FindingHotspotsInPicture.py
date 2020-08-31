@@ -44,7 +44,7 @@ def fin(p1,p2,h,w,valu):
         for i in range(p1, h):
             for j in range(p2, w):
                 x = image[i][j]
-                if x > temp & image[i][j]>40:
+                if x > temp:
                     temp = image[i][j]
                     io=i
                     jo=j
@@ -193,15 +193,17 @@ def tryy(arr ,arrJ,arrI):
     arr2=[]
     arr3 = []
     for i in range(len(arrI)):
-       print(arrI[i], arrJ[i], arr[i])
+       #print(arrI[i], arrJ[i], arr[i])
        w1, w2, w3 = ScanImage(arrI[i], arrJ[i], 10, arr[i])
-       print(w1,"__",w2,"---",w3)
-       arr1.append(w1)
-       arr2.append(w2)
-       arr3.append(w3)
-       if w1!=0 |w2!=0|w3!=0:
-        cv2.circle(src, (w3, w2), 4, (255, 128, 0), 2)
-
+       #print(w1,"__",w2,"---",w3)
+       if w2 != 0 | w3 != 0:
+           if w2 in arr2 and w3 in arr3:
+               print("d")
+           else:
+               arr1.append(w1)
+               arr2.append(w2)
+               arr3.append(w3)
+               cv2.circle(src, (w3, w2), 4, (255, 128, 0), 2)
     showPic(image)
     return arr1,arr2,arr3
 
