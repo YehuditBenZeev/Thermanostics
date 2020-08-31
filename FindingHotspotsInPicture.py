@@ -26,10 +26,11 @@ showPic(src)
 image = src[:,:,1] # green layer
 showPic(image)
 
-#Find hotspots by regions
-def fin(p1,p2,h,w,valu):
+#Find max hotspots by regions
+def findMaxPointInArea(p1,p2,h,w,valu):
     jo=0
     io=0
+    #check if point in area
     if p1 < 0 :
         return 0, 0, 0
     if p2<0:
@@ -40,7 +41,6 @@ def fin(p1,p2,h,w,valu):
         return 0, 0, 0
     else:
         temp = valu
-        #print(temp,"temp")
         for i in range(p1, h):
             for j in range(p2, w):
                 x = image[i][j]
@@ -48,29 +48,20 @@ def fin(p1,p2,h,w,valu):
                     temp = image[i][j]
                     io=i
                     jo=j
-
-        #print(temp,io,jo,image[i][j],"fin")
         return temp,io,jo
-#scan all picture
+
+#scan all picture funk get point and define to area
 def ScanImage(i,j,k,valu):
-   #print(fin(0,0,(int)(h/10),(int)(w/10)))
    l1=i-k
    l2=j-k
    l3=i+k
    l4=j+k
-   #print(l1,l2,l3,l4,")))))))))))))))))))))")
-   #print(l1,l2,l3,l4,"___scanImage",i,j)
-   t,io,ji=fin(l1,l2,(int)(l3),(int)(l4),valu)
-   if t==0 & io==0 & ji==0:
+   valuePoint,io,ji= findMaxPointInArea(l1,l2,(int)(l3),(int)(l4),valu)
+   if valuePoint==0 & io==0 & ji==0:
        return 0,0,0
    else:
-       #cv2.circle(src, (ji, io), 6, (255, 128, 0), 2)
-       return t,io,ji
-
-   # if t > 40:
-   #    cv2.circle(src, (ji, io),4,(255,128,0),2)
+       return valuePoint,io,ji
 def passOnImage(h, w,k,temp):
-    #print(h,"h",w,"w")
     arr=[]
     arrI=[]
     arrJ=[]
@@ -90,65 +81,24 @@ def passOnImage(h, w,k,temp):
             if i+1 < h:
                 if image[i+1][j]<image[i][j]:
                     flag3=True
-
             if j+1 < w:
                 if image[i][j+1]<image[i][j]:
                     flag4=True
             if flag1 & flag2 & flag3 & flag4 :
                 if image[i][j]>40:
-                    #arr.append(image[i][j])
-                    #arrI.append(i)
-                    #arrJ.append(j)
-                    #print(i,"___",j,"___",image[i][j],"passOnImage")
-                    t1,t2,t3=ScanImage(i,j,k,temp)
+                    t1,t2,t3=ScanImage(i,j,k,temp)# sage1: return max poin in area in size 10 of point
                     arr.append(t1)
                     arrI.append(t2)
                     arrJ.append(t3)
-
-                    #cv2.circle(src, (t3, t2), 4, (255, 128, 0), 2)
-                    #print(t1,t2,t3,"drow")
-                    #ScanImage(i,j)
-
-
-
-                    #cv2.circle(src, (j,i), 4, (255, 128, 0), 2)
-
-
                 flag1=False
                 flag2=False
                 flag3=False
                 flag4=False
-
-    #cv2.circle(src, (315, 31), 6, (255, 128, 0), 2)
-
-    # w1, w2, w3= ScanImage(31,315,10,t1)
-    # print(w2,w3,w1,t1)
-    # print(w3,w2,w1,"im")
-    # cv2.circle(src, (w3, w2), 4, (255, 128, 0), 2)
+    #print array that hold max point from stage1
     print(arr, "arr")
     print(arrI, "arrI")
     print(arrJ, "arrJ")
     return arr ,arrJ,arrI
-
-
-
-
-
-    # cv2.circle(src, (307, 27), 6, (255, 128, 0), 2)
-    # cv2.circle(src, (305, 28), 6, (255, 128, 0), 2)
-    # cv2.circle(src, (304, 29), 6, (255, 128, 0), 2)
-    # cv2.circle(src, (303, 30), 6, (255, 128, 0), 2)
-    # cv2.circle(src, (301, 31), 6, (255, 128, 0), 2)
-    #cv2.circle(src, (315, 31), 6, (255, 128, 0), 2)
-    #cv2.circle(src, (312, 32), 6, (255, 128, 0), 2)
-    #cv2.circle(src, (310, 33), 6, (255, 128, 0), 2)
-    #cv2.circle(src, (309, 34), 6, (255, 128, 0), 2)
-    #cv2.circle(src, (308, 35), 6, (255, 128, 0), 2)
-    #cv2.circle(src, (301, 41), 6, (255, 128, 0), 2)
-    #cv2.circle(src, (299, 50), 6, (255, 128, 0), 2)
-    #cv2.circle(src, (300, 90), 6, (255, 128, 0), 2)
-
-
 
     #showPic(image)
     #point(arrI, arrJ)
@@ -184,21 +134,15 @@ def passOnImage(h, w,k,temp):
 #     #         print(arrI[i],arrJ[i])
 #     #         break
 #     showPic(image)
-
-
-
-
-def tryy(arr ,arrJ,arrI):
+def findPointIncreaseArea(arr ,arrJ,arrI):
     arr1=[]
     arr2=[]
     arr3 = []
     for i in range(len(arrI)):
-       #print(arrI[i], arrJ[i], arr[i])
-       w1, w2, w3 = ScanImage(arrI[i], arrJ[i], 10, arr[i])
-       #print(w1,"__",w2,"---",w3)
+       w1, w2, w3 = ScanImage(arrI[i], arrJ[i], 10, arr[i])#stage2: increase area and find max point
        if w2 != 0 | w3 != 0:
-           if w2 in arr2 and w3 in arr3:
-               print("d")
+           if w2 in arr2 and w3 in arr3:#not return again
+               continue
            else:
                arr1.append(w1)
                arr2.append(w2)
@@ -220,30 +164,12 @@ h = img.shape[0]
 w = img.shape[1]
 h, w = image.shape
 arr ,arrJ,arrI=passOnImage(h,w,10,0)
-arr1,arr2,arr3=tryy(arr,arrJ,arrI)
+arr1,arr2,arr3=findPointIncreaseArea(arr,arrJ,arrI)
 print(arr1,"arr1")
 print(arr2,"arr2")
 print(arr3,"arr3")
-#arr1,arr2,arr3=tryy(arr1,arr2,arr3)
-# print(arr1,"arr1")
-# print(arr2,"arr2")
-# print(arr3,"arr3")
-# arr1,arr2,arr3=tryy(arr1,arr2,arr3)
-# print(arr1,"arr1")
-# print(arr2,"arr2")
-# print(arr3,"arr3")
-
-#passOnImage(h,w,30)
 
 
-
-# imgd = mahotas.imread('Im1.jpg')
-#
-# # fltering image
-# imgd = imgd[:, :, 0]
-#
-# print("Image",imgd)
-#
 
 
 
