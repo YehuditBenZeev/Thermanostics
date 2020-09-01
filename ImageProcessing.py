@@ -76,6 +76,7 @@ class ImageProcessing:
 
         return self.image
 
+
     # Blackens the background better
     def convert_gray_scale(self):
         print("81")
