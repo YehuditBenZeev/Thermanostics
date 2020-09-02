@@ -15,7 +15,6 @@ def showPic(image):
     cv2.imshow(window_name, image)
     cv2.waitKey(0)
     c = cv2.Canny(image, 500, 500)
-    #print(c[200])
     cv2.imshow(window_name, c)
     cv2.waitKey(0)
 
@@ -25,6 +24,8 @@ src = cv2.imread(path)
 showPic(src)
 image = src[:,:,1] # green layer
 showPic(image)
+
+
 
 #Find max hotspots by regions
 def findMaxPointInArea(p1,p2,h,w,valu):
@@ -159,9 +160,9 @@ def findPointIncreaseArea(arr ,arrJ,arrI):
 
 
 
-img = cv2.imread(path)
-h = img.shape[0]
-w = img.shape[1]
+#img = cv2.imread(path)
+#h = img.shape[0]
+#w = img.shape[1]
 h, w = image.shape
 arr ,arrJ,arrI=passOnImage(h,w,10,0)
 arr1,arr2,arr3=findPointIncreaseArea(arr,arrJ,arrI)
