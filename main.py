@@ -11,7 +11,9 @@ image = a.convert_gray_scale()
 #######################################################
 ### class  Hot_Spot ###
 
-#b= p.Palm(image , link)
+b= p.Palm(image , link)
 #b.find_max_for_palm()
-
-#b.detect_fingers()
+#b.try_detect()
+b.detect_fingers()
+b.try_detect()
+#print(b.binary_search(638))

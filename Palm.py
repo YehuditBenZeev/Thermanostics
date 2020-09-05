@@ -9,14 +9,60 @@ class Palm:
 
     def __init__(self, processed_image, path):
         self.image = processed_image
-        self.black_white_image = ip.edge_detecting(path)
+        self.black_white_image = self.get_bw_image(path)
         self.finger_width = 0
-      #  self.np.array #how to make it dynamic ??????
+        self.border_points = self.find_border_point()
         self.finger1 = f.Finger()
         self.finger2 = f.Finger()
         self.finger3 = f.Finger()
         self.finger4 = f.Finger()
         self.finger5 = f.Finger()
+
+    def find_border_point(self):
+        border_point = []
+        h, w = self.image.shape
+        c = ip.edge_detecting(self.image , 500, 500)
+        aa = np.array(self.image)
+
+        for i in range(1, h - 1):
+            for j in range(1, w - 1):
+                if c[i][j] != 0:
+                    # print(image[i][j])
+                    number_tuple = (i, j)
+                    border_point.append(number_tuple)
+                    aa = np.array(self.image)
+                    cv2.circle(aa, (j, i), 4, (255, 0, 0), 2)
+
+                    ip.show_pic(aa , "border")
+        border_point.sort()
+        return border_point
+
+
+    def get_bw_image(self , path):
+        bw_image = cv2.imread(path)
+        bw_image = bw_image[:,:,1] # green layer
+        return ip.edge_detecting(bw_image, 100, 500)
+
+    # binary search in border_points
+    def binary_search(self , val):
+        start = 1
+        end = len(self.border_points)
+        middle = int((end - start)/2)
+        print(start,",", middle ,"," ,end)
+        while (start <= end):
+           # print("stsrt, middle, end = " ,start,",", middle ,"," ,end)
+            if(self.border_points[middle][0] == val):
+                return middle
+            elif(self.border_points[middle][0] > val):
+                #print("54 , ",self.border_points[middle])
+                end = middle
+                middle = int((middle - start) / 2)
+            else: # self.border_points[middle] < val
+                start = middle
+                #print("end  , start = " , end , ", ", start)
+                middle = int((end - middle) / 2)
+        return -1
+
 
     def find_max_for_palm(self): ##################
 
@@ -43,35 +89,48 @@ class Palm:
 
 
     def draw_on_point(self):
-        cv2.circle(self.image, (self.finger1.top_1[1], self.finger1.top_1[0]), 4, (255, 0, 0), 2)
-        cv2.circle(self.image, (self.finger1.top_2[1], self.finger1.top_2[0]), 4, (255, 0, 0), 2)
-        cv2.circle(self.image, (self.finger1.bottom_2[1], self.finger1.bottom_2[0]), 4, (255, 0, 0), 2)
-        print("127 ", self.finger1.bottom_2[1], self.finger1.bottom_2[0])
         print("finger 1: top_1 = ",self.finger1.top_1[0],",",self.finger1.top_1[1],"top_2 = ",self.finger1.top_2[0],",",self.finger1.top_2[1],"bottom_2 = ",self.finger1.bottom_2[0],",",self.finger1.bottom_2[1])
-        ip.show_pic(self.image, "finger1")
+        p = np.array(self.image)
 
-        cv2.circle(self.image, (self.finger2.top_1[1], self.finger2.top_1[0]), 4, (255, 0, 0), 2)
-        cv2.circle(self.image, (self.finger2.top_2[1], self.finger2.top_2[0]), 4, (255, 0, 0), 2)
-        cv2.circle(self.image, (self.finger2.bottom_2[1], self.finger2.bottom_2[0]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger1.top_1[0], self.finger1.top_1[1]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger1.top_2[0], self.finger1.top_2[1]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger1.bottom_2[0], self.finger1.bottom_2[1]), 4, (255, 0, 0), 2)
+        print("127 ", self.finger1.bottom_2[1], self.finger1.bottom_2[0])
+        ip.show_pic(p, "finger1")
+
+        cv2.circle(p, (self.finger2.top_1[0], self.finger2.top_1[1]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger2.top_2[0], self.finger2.top_2[1]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger2.bottom_2[0], self.finger2.bottom_2[1]), 4, (255, 0, 0), 2)
         print("finger 2: top_1 = ",self.finger2.top_1[0],",",self.finger2.top_1[1],"top_2 = ",self.finger2.top_2[0],",",self.finger2.top_2[1],"bottom_2 = ",self.finger2.bottom_2[0],",",self.finger2.bottom_2[1])
-        ip.show_pic(self.image, "finger2")
+        ip.show_pic(p, "finger2")
 
-        cv2.circle(self.image, (self.finger3.top_1[1], self.finger3.top_1[0]), 4, (255, 0, 0), 2)
-        cv2.circle(self.image, (self.finger3.top_2[1], self.finger3.top_2[0]), 4, (255, 0, 0), 2)
-        cv2.circle(self.image, (self.finger3.bottom_2[1], self.finger3.bottom_2[0]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger3.top_1[0], self.finger3.top_1[1]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger3.top_2[0], self.finger3.top_2[1]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger3.bottom_2[0], self.finger3.bottom_2[1]), 4, (255, 0, 0), 2)
         print("finger 3: top_1 = ",self.finger3.top_1[0],",",self.finger3.top_1[1],"top_2 = ",self.finger3.top_2[0],",",self.finger3.top_2[1],"bottom_2 = ",self.finger3.bottom_2[0],",",self.finger3.bottom_2[1])
-        ip.show_pic(self.image, "finger3")
+        ip.show_pic(p, "finger3")
 
-        cv2.circle(self.image, (self.finger4.top_1[1], self.finger4.top_1[0]), 4, (255, 0, 0), 2)
-        cv2.circle(self.image, (self.finger4.top_2[1], self.finger4.top_2[0]), 4, (255, 0, 0), 2)
-        cv2.circle(self.image, (self.finger4.bottom_2[1], self.finger4.bottom_2[0]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger4.top_1[0], self.finger4.top_1[1]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger4.top_2[0], self.finger4.top_2[1]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger4.bottom_2[0], self.finger4.bottom_2[1]), 4, (255, 0, 0), 2)
         print("finger 4: top_1 = ",self.finger4.top_1[0],",",self.finger4.top_1[1],"top_2 = ",self.finger4.top_2[0],",",self.finger4.top_2[1],"bottom_2 = ",self.finger4.bottom_2[0],",",self.finger4.bottom_2[1])
-        ip.show_pic(self.image, "finger4")
+        ip.show_pic(p, "finger4")
 
-        cv2.circle(self.image, (self.finger5.top_1[1], self.finger5.top_1[0]), 4, (255, 0, 0), 2)
-        cv2.circle(self.image, (self.finger5.top_2[1], self.finger5.top_2[0]), 4, (255, 0, 0), 2)
-        cv2.circle(self.image, (self.finger5.bottom_2[1], self.finger5.bottom_2[0]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger5.top_1[0], self.finger5.top_1[1]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger5.top_2[0], self.finger5.top_2[1]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.finger5.bottom_2[0], self.finger5.bottom_2[1]), 4, (255, 0, 0), 2)
         print("finger 5: top_1 = ",self.finger5.top_1[0],",",self.finger5.top_1[1],"top_2 = ",self.finger5.top_2[0],",",self.finger5.top_2[1],"bottom_2 = ",self.finger5.bottom_2[0],",",self.finger5.bottom_2[1])
+        ip.show_pic(p, "finger5")
+
+
+    def try_detect(self):
+
+        for point in self.border_points :
+            pass
+        for i in range(0 ,len(self.border_points) ):
+            print(self.border_points[i])
+
+        print(len(self.border_points))
 
     def inclination_between_two_points(self, temp , k ,l):
         y = temp[0] - k
@@ -95,32 +154,32 @@ class Palm:
                 for l in range(0, i):
                     if self.image[k][l] == 0 and self.image[k][l + 1] != 0:
 
-                        if k > temp[0] and l < temp[1] :  # if lower row and a lower column
-                            temp[0] = k
-                            temp[1] = l
-                        if k > temp[0] and l >temp[1] :  # if lower row and a higher column - pasted the terning point
+                        if k > temp[1] and l < temp[0] :  # if lower row and a lower column
+                            temp[0] = l
+                            temp[1] = k
+                        if k > temp[1] and l >temp[0] :  # if lower row and a higher column - pasted the terning point
                             current_finger.top_2[0] = temp[0]
                             current_finger.top_2[1] = temp[1]
                             found = 1
 
-            elif found == 1 and k > current_finger.top_2[0] + 102:  # looking for bottom second point
+            elif found == 1 and k > current_finger.top_2[1] + 102:  # looking for bottom second point
 
-                for l in range(self.finger1.top_2[1], columns - 1):
+                for l in range(self.finger1.top_2[0], columns - 1):
                     if self.black_white_image[k][l] == 0 and self.black_white_image[k][l + 1] != 0:
                         # print("149 , k , l ,", k , l ,self.black_white_image[k][l] ,self.black_white_image[k][l + 1])
                         #if  temp[1] > l:  # if lower row and a lower column
 
                         if self.inclination_between_two_points(temp , k , l) < 0:  # if lower row and a higher column - pasted the terning point
                             print("186 , k , l ,", k, l, self.black_white_image[k][l], self.black_white_image[k][l + 1])
-                            current_finger.bottom_2[0] = k
-                            current_finger.bottom_2[1] = l
+                            current_finger.bottom_2[0] = l
+                            current_finger.bottom_2[1] = k
                             print("191 , k , l ,", k, l, temp[0], temp[1])
                             found = 2
                             break
                         else :
                             print("197" , k,l)
-                            temp[0] = k
-                            temp[1] = l
+                            temp[0] = l
+                            temp[1] = k
                             continue
 
         print("202" , current_finger.top_1[0] , current_finger.top_1[1] ,current_finger.top_2[0], current_finger.top_2[1], current_finger.bottom_2[0], current_finger.bottom_2[1])
@@ -141,13 +200,13 @@ class Palm:
                   #  print(inclination)
 
                     if inclination < -0.5:  # if lower row and a higher column - pasted the terning point
-                        current_finger.bottom_2[0] = k
-                        current_finger.bottom_2[1] = l
+                        current_finger.bottom_2[0] = l
+                        current_finger.bottom_2[1] = k
                         found = 1
                         break
                     else:
-                        temp[0] = k
-                        temp[1] = l
+                        temp[0] = l
+                        temp[1] = k
                         continue
 
     def detect_bottom2_finger5(self):
@@ -162,12 +221,12 @@ class Palm:
                 break
             for k in range(0 , j):
                 if self.black_white_image[k][l] == 0 and self.black_white_image[k][l + 1] != 0:
-                    self.finger2.top_1[0] = k
-                    self.finger2.top_1[1] = l
+                    self.finger2.top_1[0] = l
+                    self.finger2.top_1[1] = k
                     found = 1
                     break
 
-        self.detect_bottom2_point(self.finger2.top_1[1] , self.finger2.top_1[0] + int(self.finger_width/2) , self.finger2)
+       # self.detect_bottom2_point(self.finger2.top_1[0] + int(self.finger_width/2) , self.finger2.top_1[1] , self.finger2)
 
     def detect_fourth_finger(self , i , j):
         rows, columns = self.image.shape
@@ -177,13 +236,13 @@ class Palm:
                 break
             for k in range(j , rows -1):
                 if self.black_white_image[k][l] == 0 and self.black_white_image[k][l + 1] != 0:
-                    self.finger4.top_1[0] = k
-                    self.finger4.top_1[1] = l
+                    self.finger4.top_1[0] = l
+                    self.finger4.top_1[1] = k
                     found = 1
                     break
         self.finger4.top_2[0] = self.finger4.top_1[0]
         self.finger4.top_2[1] = self.finger4.top_1[1]
-        self.detect_bottom2_point(self.finger4.top_1[1] , self.finger4.top_1[0] + int(self.finger_width /2), self.finger4)
+       # self.detect_bottom2_point(self.finger4.top_1[0] + int(self.finger_width /2), self.finger4.top_1[1] , self.finger4)
 
     def detect_fifth_finger(self , i , j):
         rows, columns = self.image.shape
@@ -192,14 +251,19 @@ class Palm:
             if found == 1:
                 break
             for k in range(j, rows - 1):
+                #print("l , k" , l," , ", k)
+               # p = np.array(self.image)
+                #cv2.circle(p, (l, k), 4, (255, 0, 0), 2)
+               # ip.show_pic(p,"p pic")
                 if self.black_white_image[k][l] == 0 and self.black_white_image[k][l + 1] != 0:
-                    self.finger5.top_1[0] = k
-                    self.finger5.top_1[1] = l
+                    print("in")
+                    self.finger5.top_1[0] = l+1
+                    self.finger5.top_1[1] = k
                     found = 1
                     break
 
 
-        self.detect_bottom2_finger5()
+        #self.detect_bottom2_finger5()
 
     # finds the distance between two points
     def distance(self, point1 , point2):
@@ -218,21 +282,25 @@ class Palm:
         ip.show_pic(self.black_white_image, "image")
 
         for j in range(0, rows-1):
+            if count == 2:
+                break
             for i in range(0, columns-1):
-                if self.black_white_image[j][i]==0 and self.black_white_image[j][i+1]!=0 :
+                if self.black_white_image[j][i] == 0 and self.black_white_image[j][i+1] != 0 :
                     #self.image[j][i]=255
                     if count == 1: # detected first finger
                         count = 2
 
-                        self.finger1.top_1[0] = j
-                        self.finger1.top_1[1] = i
+                        self.finger1.top_1[0] = i
+                        self.finger1.top_1[1] = j
 
                         self.detect_tow_points(j, i, self.finger1)
 
                         self.finger_width = int(self.distance(self.finger1.top_1 , self.finger1.top_2))
                         print("self.finger_width = ", self.finger_width)
-                        print("178", self.finger1.bottom_2 , self.black_white_image[self.finger1.bottom_2[0]][self.finger1.bottom_2[1]+1])
+                        #print("178", self.finger1.bottom_2 , self.black_white_image[self.finger1.bottom_2[0]][self.finger1.bottom_2[1]+1])
+                        break
 
+        # search for finger 3
         for i in range(0, columns - 1):
             if count == 3:
                 break
@@ -241,14 +309,14 @@ class Palm:
                     if count == 2:  # detect third finger
                         count = 3
 
-                        self.finger3.top_1[0] = j
-                        self.finger3.top_1[1] = i
+                        self.finger3.top_1[0] = i
+                        self.finger3.top_1[1] = j
                         print("j = " ,j , " finger = ", self.finger3.top_1[0] )
-                        self.detect_bottom2_point(self.finger3.top_1[1], self.finger3.top_1[0] + int(self.finger_width/2) ,self.finger2)
+                       # self.detect_bottom2_point(self.finger3.top_1[1], self.finger3.top_1[0] + int(self.finger_width/2) ,self.finger2)
 
                         self.detect_second_finger(int(i - self.finger_width) , int(j - self.finger_width))
                         self.detect_fourth_finger(int(i + self.finger_width) , int(j + self.finger_width))
-                        self.detect_fifth_finger(int(self.finger4.top_2[1] + self.finger_width) , int(self.finger4.top_2[0] + self.finger_width)  )
+                        self.detect_fifth_finger(int(self.finger4.top_2[0] + self.finger_width*2) , int(self.finger4.top_2[1] + self.finger_width)  )
                         break
 
         self.finger3.bottom_1[0] = self.finger2.bottom_2[0]

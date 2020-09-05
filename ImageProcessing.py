@@ -71,7 +71,7 @@ class ImageProcessing:
         self.image[-1:,:] = 0
 
        # print(self.image)
-        show_pic(edge_detecting(self.image), "***")
+        show_pic(edge_detecting(self.image, 350,500), "***")
         ####print(self.image[269:270])
 
         return self.image
@@ -111,6 +111,9 @@ class ImageProcessing:
                     else : break
 
         show_pic(self.image , "done")
+        b_w_image = edge_detecting(self.image , 100, 50)
+
+        return self.image
 '''
         b_w_image = edge_detecting(self.image , 350, 500)
         show_pic(b_w_image ,"b_w_image")
