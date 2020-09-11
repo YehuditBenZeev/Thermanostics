@@ -23,29 +23,46 @@ image = src[:,:,1] # green layer
 #img = cv.imread('Im1.jpg',0)
 ret,thresh = cv.threshold(c,127,255,0)
 contours,hierarchy = cv.findContours(thresh, 1, 2)
-print(contours)
+for x in contours:
+    for p in x:
+        for m in p:
+            i=m[0]
+            j=m[1]
+            cv2.circle(src, (i, j), 4, (255, 128, 0), 2)
+            break
+        break
 
-# cnt = contours[0]
-# #print(contours[0][0][0][1],"cccccccccccc")
-# i=contours[0][0][0][0]
-# j=contours[0][0][0][1]
-# cv2.circle(src, (i,j), 4, (255, 128, 0), 2)
-# showPic(image)
-# M = cv.moments(cnt)
-# print( M )
-# area = cv.contourArea(cnt)
-# print(area)
-# epsilon = 0.1*cv.arcLength(cnt,True)
-# approx = cv.approxPolyDP(cnt,epsilon,True)
-# print(approx)
-# hull = cv.convexHull(contours[0])
-# print(hull)
-#hull = cv.convexHull(points[, hull[, clockwise[, returnPoints]]
-for i in range(0,80):
-    i = contours[i][0][0][0]
-    j=contours[i][0][0][1]
-    cv2.circle(src, (j, i), 4, (255, 128, 0), 2)
 showPic(image)
+
+cnt = contours[0]
+print(cnt,"cnt")
+# perimeter = cv.arcLength(cnt,True)
+# print(perimeter,"per")
+#cv2.circle(src, (i,j), 4, (255, 128, 0), 2)
+#showPic(image)
+M = cv.moments(cnt)
+print( M )
+area = cv.contourArea(cnt)
+print(area)
+epsilon = 0.1*cv.arcLength(cnt,True)
+approx = cv.approxPolyDP(cnt,epsilon,True)
+print(approx)
+# hull = cv.convexHull(contours[])
+# print(hull)
+# for x in contours:
+#     hull = cv.convexHull(x)
+#     print(hull,"hull")
+    # for u in x:
+    #     i = u[0]
+    #     j = u[1]
+    #     cv2.circle(src, (i, j), 4, (255, 128, 0), 2)
+showPic(image)
+#hull = cv.convexHull(points[, hull[, clockwise[, returnPoints]]
+# for i in range(0,80):
+#     i = contours[i][0][0][0]
+#     j=contours[i][0][0][1]
+#     cv2.circle(src, (j, i), 4, (255, 128, 0), 2)
+# showPic(image)
 
 
 def findBorderPoint(h,w,c):
