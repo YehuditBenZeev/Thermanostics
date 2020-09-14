@@ -64,7 +64,6 @@ showPic(image)
 #     cv2.circle(src, (j, i), 4, (255, 128, 0), 2)
 # showPic(image)
 
-
 def findBorderPoint(h,w,c):
     list1=[]
     for i in range(1, h - 1):

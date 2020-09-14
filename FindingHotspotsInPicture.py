@@ -163,7 +163,8 @@ def findPointIncreaseArea(arr ,arrJ,arrI):
 #img = cv2.imread(path)
 #h = img.shape[0]
 #w = img.shape[1]
-h, w = image.shape
+h,w = image.shape
+print(h,w)
 arr ,arrJ,arrI=passOnImage(h,w,10,0)
 arr1,arr2,arr3=findPointIncreaseArea(arr,arrJ,arrI)
 print(arr1,"arr1")
