@@ -19,7 +19,7 @@ image = a.convert_gray_scale()
 #cv2.circle(aa, (50, 350), 4, (255, 0, 0), 2)
 #ImageProcessing.show_pic(aa, "**************")
 
-#b = P.Palm(image, link)
+b = P.Palm(image, link)
 #b.find_max_for_palm()
 #b.try_detect()
 #b.detect_fingers()
