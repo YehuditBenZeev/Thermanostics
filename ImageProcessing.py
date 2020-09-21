@@ -26,7 +26,7 @@ class ImageProcessing:
         mask = cv2.Canny(border, 350, 500)
 
         rows, columns = self.image.shape
-        show_pic(self.image,"edge" )
+        #show_pic(self.image,"edge" )
 
         for j in range(1, rows - 1):
            for i in range(1, columns - 1):
@@ -35,10 +35,10 @@ class ImageProcessing:
                     mask[j][i] = 0
                 else: mask[j][i] = 255
 
-        show_pic(mask,"edge" )
-        show_pic(self.image,"edge" )
+        #show_pic(mask,"edge" )
+        #show_pic(self.image,"edge" )
         mask = cv2.Canny(border, 350, 500)
-        show_pic(mask,"edge" )
+        #show_pic(mask,"edge" )
 
     # convert image to gray scale
     def convert_image_to_gray_scale(self):
@@ -47,7 +47,7 @@ class ImageProcessing:
        #print(self.image)
        ##### print(self.image.shape)
         self.image = cv2.bilateralFilter(self.image, 11, 17, 17)
-        show_pic(self.image, "image")
+        #show_pic(self.image, "image")
 
         ##  print(self.image.shape)
 
@@ -58,7 +58,7 @@ class ImageProcessing:
                 if (self.image[i][j]<20) and ((self.image[i+1][j+1]<10) and (self.image[i-1][j-1]<10)):
                     self.image[i][j] = 0
 
-        show_pic(self.image, "image")
+        #show_pic(self.image, "image")
 
        # show_pic(self.image)
 
@@ -71,7 +71,7 @@ class ImageProcessing:
         self.image[-1:,:] = 0
 
        # print(self.image)
-        show_pic(edge_detecting(self.image, 350,500), "***")
+        #show_pic(edge_detecting(self.image, 350,500), "***")
         ####print(self.image[269:270])
 
         return self.image
@@ -81,7 +81,7 @@ class ImageProcessing:
         print("81")
         self.image = self.image[:,:,1] # green layer
         b_w_image = edge_detecting(self.image , 100, 50)
-        show_pic(b_w_image ,"b_w_image")
+        #show_pic(b_w_image ,"b_w_image")
         height, width = self.image.shape
         top_wrist = 0
         bottom_wrist =0
@@ -110,7 +110,7 @@ class ImageProcessing:
                         self.image[height - i][width - j] = 0
                     else : break
 
-        show_pic(self.image , "done")
+        #show_pic(self.image , "done")
         b_w_image = edge_detecting(self.image , 100, 50)
 
         return self.image

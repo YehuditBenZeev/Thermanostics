@@ -78,7 +78,7 @@ class Palm:
 
     def find_max_for_palm(self): ##################
 
-        Ip.show_pic(self.image, "image")
+        ##Ip.show_pic(self.image, "image")
 
         (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(self.image)
         print (minVal, maxVal, minLoc, maxLoc)
@@ -86,7 +86,7 @@ class Palm:
        # print("72")
         #show_pic(ss)
         cv2.circle(self.image, maxLoc, 20, (255, 0, 0), 2)
-        Ip.show_pic(self.image, "max circle")
+        ##Ip.show_pic(self.image, "max circle")
 
 
     def central_of_palm(self):
@@ -108,31 +108,31 @@ class Palm:
         cv2.circle(p, (self.finger1.top_2[0], self.finger1.top_2[1]), 4, (255, 0, 0), 2)
         cv2.circle(p, (self.finger1.bottom_2[0], self.finger1.bottom_2[1]), 4, (255, 0, 0), 2)
         print("127 ", self.finger1.bottom_2[1], self.finger1.bottom_2[0])
-        Ip.show_pic(p, "finger1")
+        #Ip.show_pic(p, "finger1")
 
         cv2.circle(p, (self.finger2.top_1[0], self.finger2.top_1[1]), 4, (255, 0, 0), 2)
         cv2.circle(p, (self.finger2.top_2[0], self.finger2.top_2[1]), 4, (255, 0, 0), 2)
         cv2.circle(p, (self.finger2.bottom_2[0], self.finger2.bottom_2[1]), 4, (255, 0, 0), 2)
         print("finger 2: top_1 = ",self.finger2.top_1[0],",",self.finger2.top_1[1],"top_2 = ",self.finger2.top_2[0],",",self.finger2.top_2[1],"bottom_2 = ",self.finger2.bottom_2[0],",",self.finger2.bottom_2[1])
-        Ip.show_pic(p, "finger2")
+        ##Ip.show_pic(p, "finger2")
 
         cv2.circle(p, (self.finger3.top_1[0], self.finger3.top_1[1]), 4, (255, 0, 0), 2)
         cv2.circle(p, (self.finger3.top_2[0], self.finger3.top_2[1]), 4, (255, 0, 0), 2)
         cv2.circle(p, (self.finger3.bottom_2[0], self.finger3.bottom_2[1]), 4, (255, 0, 0), 2)
         print("finger 3: top_1 = ",self.finger3.top_1[0],",",self.finger3.top_1[1],"top_2 = ",self.finger3.top_2[0],",",self.finger3.top_2[1],"bottom_2 = ",self.finger3.bottom_2[0],",",self.finger3.bottom_2[1])
-        Ip.show_pic(p, "finger3")
+        ##Ip.show_pic(p, "finger3")
 
         cv2.circle(p, (self.finger4.top_1[0], self.finger4.top_1[1]), 4, (255, 0, 0), 2)
         cv2.circle(p, (self.finger4.top_2[0], self.finger4.top_2[1]), 4, (255, 0, 0), 2)
         cv2.circle(p, (self.finger4.bottom_2[0], self.finger4.bottom_2[1]), 4, (255, 0, 0), 2)
         print("finger 4: top_1 = ",self.finger4.top_1[0],",",self.finger4.top_1[1],"top_2 = ",self.finger4.top_2[0],",",self.finger4.top_2[1],"bottom_2 = ",self.finger4.bottom_2[0],",",self.finger4.bottom_2[1])
-        Ip.show_pic(p, "finger4")
+        ##Ip.show_pic(p, "finger4")
 
         cv2.circle(p, (self.finger5.top_1[0], self.finger5.top_1[1]), 4, (255, 0, 0), 2)
         cv2.circle(p, (self.finger5.top_2[0], self.finger5.top_2[1]), 4, (255, 0, 0), 2)
         cv2.circle(p, (self.finger5.bottom_2[0], self.finger5.bottom_2[1]), 4, (255, 0, 0), 2)
         print("finger 5: top_1 = ",self.finger5.top_1[0],",",self.finger5.top_1[1],"top_2 = ",self.finger5.top_2[0],",",self.finger5.top_2[1],"bottom_2 = ",self.finger5.bottom_2[0],",",self.finger5.bottom_2[1])
-        Ip.show_pic(p, "finger5")
+        ##Ip.show_pic(p, "finger5")
 
     def detect_bottom_point(self, top_finger, bottom_finger):
         start_i = top_finger.top_1[1]
@@ -144,12 +144,12 @@ class Palm:
         aa = np.array(self.image)
         bb = np.array(b_w_i)
 
-        Ip.show_pic(bb, "before border")
+        ##Ip.show_pic(bb, "before border")
 
         for j in range(start_j, end_j):
             for i in range(start_i, end_i):
                 if b_w_i[i][j] != 0:
-                    print(b_w_i[i][j])
+                    #print(b_w_i[i][j])
                     # print(image[i][j])
                     number_tuple = (j, i)
                     border_point.append(number_tuple)
@@ -315,7 +315,7 @@ class Palm:
         count = 1
         first = 0
         temp = np.array([0, 0])  # holds: row , column
-        Ip.show_pic(self.black_white_image, "image")
+        ##Ip.show_pic(self.black_white_image, "image")
 
         for j in range(0, rows-1):
             if count == 2:
@@ -375,4 +375,4 @@ class Palm:
         self.finger5.bottom_1[1] = self.finger4.bottom_2[1]'''
 
         self.draw_on_point()
-        Ip.show_pic(self.image, "image")
+        ##Ip.show_pic(self.image, "image")
