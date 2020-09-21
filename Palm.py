@@ -17,7 +17,8 @@ class Palm:
         self.finger3 = F.Finger()
         self.finger4 = F.Finger()
         self.finger5 = F.Finger()
-        self.ListContours=[]
+        #self.ListContours=[]
+
 
     def find_border_point(self):
         border_point = []
@@ -36,8 +37,8 @@ class Palm:
                     i = m[0]
                     j = m[1]
                     cv2.circle(aa, (i, j), 4, (255, 128, 0), 2)
-                    self.ListContours.append(m)
-            print(self.ListContours)
+                    #self.ListContours.append(m)
+
 
         Ip.show_pic(aa, "border")
         '''  for i in range(1, h - 1):
