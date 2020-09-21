@@ -4,7 +4,7 @@ import ImageProcessing
 
 ####################################################
 ### class  Image_Processing ###
-link = 'Im8.jpg'
+link = 'Im1.jpg'
 a = ImageProcessing.ImageProcessing(link)
 #a = Image_Processing(link)
 #a.black_border()
