@@ -2,6 +2,7 @@ import Palm as P
 import ImageProcessing
 import DivisionPalmArea as D
 import SortHotPointInArea as S
+import FindingHotspotsInPicture as F
 
 
 ####################################################
@@ -30,10 +31,12 @@ image = a.convert_gray_scale()
 # div.FindFinger3()
 # div.FindFinger4()
 # div.FindFinger5()
+f=F.FindingHotspotsInPicture(image,link)
+f.passOnImage(15)
 
-sort=S.SortHotPointInArea(image,link)
-sort.Area1()
-sort.Arae2()
-sort.Arae3()
-sort.Arae4()
-sort.Arae5()
+# sort=S.SortHotPointInArea(image,link)
+# sort.Area1()
+# sort.Arae2()
+# sort.Arae3()
+# sort.Arae4()
+# sort.Arae5()
