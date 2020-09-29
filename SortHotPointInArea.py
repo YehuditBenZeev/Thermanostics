@@ -27,10 +27,6 @@ class SortHotPointInArea:
             for p in x:
                 for m in p:
                     self.ListContours.append((m[0],m[1]))
-        #print("!!!!!!!!!!!!!",self.ListContours)
-
-
-
 
     def Area0(self):
         print("area 0")
