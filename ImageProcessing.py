@@ -78,7 +78,6 @@ class ImageProcessing:
 
     # Blackens the background better
     def convert_gray_scale(self):
-        print("81")
         self.image = self.image[:,:,1] # green layer
         b_w_image = edge_detecting(self.image , 100, 50)
         #show_pic(b_w_image ,"b_w_image")
