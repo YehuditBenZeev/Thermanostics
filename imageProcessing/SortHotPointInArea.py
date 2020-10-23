@@ -1,10 +1,8 @@
 import cv2
-import DivisionPalmArea as Div
-import ImageProcessing as Ip
-import numpy as np
-import FindingHotspotsInPicture as Find
+from imageProcessing import DivisionPalmArea as Div, FindingHotspotsInPicture as Find
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
+from imageProcessing import CovertGrayScale as Ip
 
 
 class SortHotPointInArea:
@@ -29,6 +27,7 @@ class SortHotPointInArea:
                     self.ListContours.append((m[0],m[1]))
 
     def Area0(self):
+        self.divPalm.FindArea0()
         print("area 0")
     def Area1(self):
         self.divPalm.FindFinger1()

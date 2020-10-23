@@ -4,8 +4,9 @@ import os.path
 import sys
 import argparse
 # importing required libraries
-import mahotas
-import ImageProcessing as Ip
+#import mahotas
+from imageProcessing import CovertGrayScale as Ip
+
 class FindingHotspotsInPicture:
     def __init__(self, processed_image, path):
         self.image = processed_image
