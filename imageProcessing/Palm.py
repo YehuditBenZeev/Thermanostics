@@ -115,10 +115,15 @@ class Palm:
                     self.image[i][j] = 0
 
     def draw_on_point(self):
-        print("finger 1: top_1 = ", self.finger1.top_1[0], ",", self.finger1.top_1[1], "top_2 = ", self.finger1.top_2[0]
-              , ",", self.finger1.top_2[1], "bottom_2 = ", self.finger1.bottom_2[0], ",", self.finger1.bottom_2[1])
+        print("palm_base_top : top = ", self.palm_base_top[0], ",", self.palm_base_top[1])
+        print("palm_base_bottom : top = ", self.palm_base_bottom[0], ",", self.palm_base_bottom[1])
+
         p = np.array(self.image)
         cv2.circle(p, (self.palm_base_top[0], self.palm_base_top[1]), 4, (255, 0, 0), 2)
+        cv2.circle(p, (self.palm_base_bottom[0], self.palm_base_bottom[1]), 4, (255, 0, 0), 2)
+
+        print("finger 1: top_1 = ", self.finger1.top_1[0], ",", self.finger1.top_1[1], "top_2 = ", self.finger1.top_2[0]
+              , ",", self.finger1.top_2[1], "bottom_2 = ", self.finger1.bottom_2[0], ",", self.finger1.bottom_2[1])
 
         cv2.circle(p, (self.finger1.top_1[0], self.finger1.top_1[1]), 4, (255, 0, 0), 2)
         cv2.circle(p, (self.finger1.top_2[0], self.finger1.top_2[1]), 4, (255, 0, 0), 2)
@@ -355,12 +360,7 @@ class Palm:
                         break
 
         # search for finger 3
-        # print(self.image[305][21], self.black_white_image[305][21])
-        # print(self.image[305][22], self.black_white_image[305][22])
-        # print(self.image[306][21], self.black_white_image[306][21])
-
         for i in range(0, columns - 1):
-
             if count == 3:
                 break
             for j in range(0, rows - 1):
@@ -395,7 +395,6 @@ class Palm:
 
         self.detect_palm_points()
 
-        self.draw_on_point()
         Ip.show_pic(self.image, "image")
 
     def detect_palm_points(self):
@@ -482,9 +481,9 @@ class Palm:
             if border_point[i][1] < temp:
                 temp = border_point[i][1]
                 position = i
-        self.palm_base_top[0] = border_point[position][0]
-        self.palm_base_top[1] = border_point[position][1]
+        # self.palm_base_top[0] = border_point[position][0]
+        # self.palm_base_top[1] = border_point[position][1]
         cv2.circle(aa, (self.palm_base_top[0], self.palm_base_top[1]), 4, (255, 0, 0), 2)
-        Ip.show_pic(aa, "++++++++")
+        Ip.show_pic(aa, "///////////")
 
         print("414 - ", j_top, j_bottom)
