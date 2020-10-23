@@ -1,6 +1,8 @@
 import cv2
+import imutils as imutils
 import numpy as np
 import argparse
+from PIL import Image
 
 
 # Displaying an image
@@ -16,6 +18,26 @@ def edge_detecting(image, noise, intensity):
     return image_b_w
 
 
+def detect_top_bottom_wrist_points(b_w_image):
+    height, width = b_w_image.shape
+
+    top_wrist = 0
+    bottom_wrist = 0
+
+    for i in range(1, height - 1):
+        if b_w_image[i][width - 2] != 0:
+            top_wrist = i
+            break
+    for i in range(1, height - 1):
+        if b_w_image[height - i][width - 2] != 0:
+            bottom_wrist = height - i
+            break
+
+    print("top_wrist , bottom_wrist", top_wrist, bottom_wrist)
+
+    return top_wrist, bottom_wrist
+
+
 class ImageProcessing:
 
     def __init__(self, image_path):
@@ -29,7 +51,7 @@ class ImageProcessing:
         mask = cv2.Canny(border, 350, 500)
 
         rows, columns = self.image.shape
-        show_pic(self.image, "edge")
+        # show_pic(self.image, "edge")
 
         for j in range(1, rows - 1):
             for i in range(1, columns - 1):
@@ -39,10 +61,10 @@ class ImageProcessing:
                 else:
                     mask[j][i] = 255
 
-        show_pic(mask, "edge")
-        show_pic(self.image, "edge")
+        # show_pic(mask, "edge")
+        # show_pic(self.image, "edge")
         mask = cv2.Canny(border, 350, 500)
-        show_pic(mask, "edge")
+        # show_pic(mask, "edge")
 
     # convert image to gray scale
     def convert_image_to_gray_scale(self):
@@ -51,7 +73,7 @@ class ImageProcessing:
         # print(self.image)
         # print(self.image.shape)
         self.image = cv2.bilateralFilter(self.image, 11, 17, 17)
-        show_pic(self.image, "image")
+        # show_pic(self.image, "image")
 
         # print(self.image.shape)
 
@@ -62,7 +84,7 @@ class ImageProcessing:
                 if (self.image[i][j] < 20) and ((self.image[i+1][j+1] < 10) and (self.image[i-1][j-1] < 10)):
                     self.image[i][j] = 0
 
-        show_pic(self.image, "image")
+        # show_pic(self.image, "image")
 
         # show_pic(self.image)
 
@@ -75,7 +97,7 @@ class ImageProcessing:
         self.image[-1:, :] = 0
 
         # print(self.image)
-        show_pic(edge_detecting(self.image, 350, 500), "***")
+        # show_pic(edge_detecting(self.image, 350, 500), "***")
         # print(self.image[269:270])
 
         return self.image
@@ -85,12 +107,11 @@ class ImageProcessing:
         print("81")
         self.image = self.image[:, :, 1]  # green layer
         b_w_image = edge_detecting(self.image, 100, 50)
-        show_pic(b_w_image, "b_w_image")
+        # show_pic(b_w_image, "b_w_image")
         height, width = self.image.shape
-        top_wrist = 0
-        bottom_wrist = 0
+        top_wrist, bottom_wrist = detect_top_bottom_wrist_points(b_w_image)
 
-        for i in range(1, height - 1):
+        '''for i in range(1, height - 1):
             if b_w_image[i][width - 2] != 0:
                 top_wrist = i
                 break
@@ -99,7 +120,7 @@ class ImageProcessing:
                 bottom_wrist = height - i
                 break
 
-        print("top_wrist , bottom_wrist", top_wrist, bottom_wrist)
+        print("top_wrist , bottom_wrist", top_wrist, bottom_wrist)'''
 
         for i in range(1, height - 1):
             for j in range(1, width - 1):
@@ -139,4 +160,43 @@ class ImageProcessing:
                         '''
 
 
+def detect_most_left_border_point(b_w_image):
+    rows, columns = b_w_image.shape
+
+    for i in range(0, columns - 1):
+        for j in range(0, rows - 1):
+            if (b_w_image[j][i] == 0) and (b_w_image[j][i + 1] != 0):
+                p = np.array(b_w_image)
+                cv2.circle(p, (i, j), 4, (255, 0, 0), 2)
+                return i, j
+
+
+def rotate_image(rotate_img):
+    black_white_image = edge_detecting(rotate_img, 100, 50)
+    top_wrist, bottom_wrist = detect_top_bottom_wrist_points(black_white_image)
+    show_pic(rotate_img, "rotate_img")
+    show_pic(black_white_image, "black_white_image")
+
+    rows, columns = rotate_img.shape
+
+    print("rows, columns", rows, columns)
+
+    mid_wrist = int((bottom_wrist - top_wrist) / 2) + top_wrist
+
+    left_point_x, left_point_y = detect_most_left_border_point(black_white_image)
+    ''' # finds the first border point that's in the same line as 'mid_wrist'
+    for i in range(0, columns):
+        p = np.array(rotate_img)
+        cv2.circle(p, (i, mid_wrist), 4, (255, 0, 0), 2)
+        show_pic(p, "++++++++++++")'''
+
+    while abs(mid_wrist - left_point_x) > 3:
+    #rotate_img = rotate_img.rotate(30)
+         #rotated = imutils.rotate_bound(image, angle)
+        left_point_x, left_point_y = detect_most_left_border_point(black_white_image)
+        for angle in np.arange(0, 360, 4):
+            rotate_img = imutils.rotate(rotate_img, angle)
+        show_pic(rotate_img, "rotate")
+
+    show_pic(rotate_img, "done to rotate")
 
