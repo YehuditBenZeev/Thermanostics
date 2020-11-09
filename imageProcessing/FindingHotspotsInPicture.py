@@ -5,7 +5,14 @@ import sys
 import argparse
 # importing required libraries
 #import mahotas
+from openpyxl import load_workbook
+import pandas as pd
 from imageProcessing import CovertGrayScale as Ip
+
+
+
+
+
 
 class FindingHotspotsInPicture:
     def __init__(self, processed_image, path):
@@ -87,5 +94,25 @@ class FindingHotspotsInPicture:
         for i in self.pointList:
             cv2.circle(self.img, i, 4, (255, 128, 0), 2)
         Ip.show_pic(self.img,"p")
+
+
+
+#____________________________________________________________________________________________
+    def write_in_file(self):
+        writer = pd.ExcelWriter('hotspots.xlsx', engine='openpyxl')
+        wb = writer.book
+        df = pd.DataFrame({'':[],
+                           'Area':[],
+                           'Mean':[],
+                           'Min':[],
+                           'Max':[],
+                           'X':[],
+                           'Y':[],
+                           'IntDen':[],
+                           'RawIntDen':[]})
+
+        df.to_excel(writer, index=False)
+        wb.save('hotspots.xlsx')
+
 
 

@@ -35,6 +35,23 @@ def detect_top_bottom_wrist_points(b_w_image):
     print("top_wrist , bottom_wrist", top_wrist, bottom_wrist)
 
     return top_wrist, bottom_wrist
+def black_background(image):
+    mask = edge_detecting(image, 300, 10)
+
+    mask[1:5, :] = 0
+    mask[-2:, :] = 0
+    mask[:, 1:5] = 0
+
+    rows, columns, a = image.shape
+    print(rows, " ",  columns, " ", a)
+    for j in range(1, rows - 1):
+        for i in range(1, columns - 1):
+            if mask[j][i] != 0:
+                image[j][i] = 0
+
+                # mask[j][i] = 0
+    show_pic(mask, "mask")
+    show_pic(image, "mask")
 
 
 class ImageProcessing:
@@ -172,6 +189,7 @@ def detect_most_left_border_point(b_w_image):
 
 
 def rotate_image(rotate_img):
+
     black_white_image = edge_detecting(rotate_img, 100, 50)
     top_wrist, bottom_wrist = detect_top_bottom_wrist_points(black_white_image)
     show_pic(rotate_img, "rotate_img")
@@ -194,9 +212,10 @@ def rotate_image(rotate_img):
     #rotate_img = rotate_img.rotate(30)
          #rotated = imutils.rotate_bound(image, angle)
         left_point_x, left_point_y = detect_most_left_border_point(black_white_image)
-        for angle in np.arange(0, 360, 4):
-            rotate_img = imutils.rotate(rotate_img, angle)
-        show_pic(rotate_img, "rotate")
+        for angle in np.arange(0, 360, 15):
+            rotated = imutils.rotate(rotate_img, angle)
+            cv2.imshow("Rotated (Problematic)", rotated)
+            cv2.waitKey(0)
 
     show_pic(rotate_img, "done to rotate")
 
