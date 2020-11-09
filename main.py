@@ -9,6 +9,19 @@ a = CovertGrayScale.ImageProcessing(link)
 # image = a.convert_image_to_gray_scale()
 image = a.convert_gray_scale()
 #######################################################
+CovertGrayScale.rotate_image(image)
+
+# ## class  Hot_Spot ###
+# aa = np.array(image)
+# cv2.circle(aa, (50, 350), 4, (255, 0, 0), 2)
+# ImageProcessing.show_pic(aa, "**************")
+
+# b = Pn.Palm(image, link)
+# b.find_max_for_palm()
+# b.try_detect()
+# b.detect_fingers()
+# b.draw_on_point()
+# b.detect_palm_points()
 ### class  Hot_Spot ###
 #aa = np.array(image)
 #cv2.circle(aa, (50, 350), 4, (255, 0, 0), 2)
