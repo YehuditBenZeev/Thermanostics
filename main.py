@@ -3,7 +3,6 @@ from imageProcessing import CovertGrayScale, Palm as Pn ,SortHotPointInArea as S
 ####################################################
 # ------------ class  Image_Processing ------------------#
 link = 'Im1.jpg'
-link = "Im1.jpg"
 # image = cv2.imread(link)
 # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
