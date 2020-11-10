@@ -59,7 +59,7 @@ class DivisionPalmArea:
         # i = self.bottomRight[0]
         # j = self.bottomRight[1]
         # cv2.circle(self.img, (i, j), 4, (255, 128, 0), 2)
-        pts = np.array([[self.TopLeFt[0],self.TopLeFt[1]+20],[self.TopLeFt[0],self.TopLeFt[1]-20],[self.bottomRight[0],210],[self.bottomRight[0],self.bottomRight[1]]], np.int32)
+        pts = np.array([[self.TopLeFt[0],self.TopLeFt[1]+20],[self.TopLeFt[0],self.TopLeFt[1]-20],self.bottomRight,self.bottomLeft], np.int32)
         pts = pts.reshape((-1, 1, 2))
         cv2.polylines(self.img, [pts], True, (255, 0, 0))
         Ip.show_pic(self.img, "p")

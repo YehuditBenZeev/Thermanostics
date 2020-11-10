@@ -38,7 +38,7 @@ class SortHotPointInArea:
               if polygon.contains(point) :
                   if p not in self.ListContours:
                       self.ArrayArea1.append(p)
-                      cv2.circle(self.divPalm.img, p, 4, (255, 128, 0), 2)
+
                       self.findPoint.pointList.remove(p)
                       #print(polygon.contains(point), "area1___________")
         Ip.show_pic(self.divPalm.img,"p")
@@ -46,12 +46,11 @@ class SortHotPointInArea:
         self.divPalm.FindFinger2()
         print("area2")
         for p in self.findPoint.pointList:
-            polygon = Polygon([[self.divPalm.TopLeFt[0],self.divPalm.TopLeFt[1]+20],[self.divPalm.TopLeFt[0],self.divPalm.TopLeFt[1]-20],[self.divPalm.bottomRight[0],210],[self.divPalm.bottomRight[0],self.divPalm.bottomRight[1]]])
+            polygon = Polygon([self.divPalm.TopLeFt,self.divPalm.TopLeFt,self.divPalm.bottomRight,self.divPalm.bottomLeft])
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.ListContours:
                     self.ArrayArea1.append(p)
-                    cv2.circle(self.divPalm.img, p, 4, (255, 128, 0), 2)
                     self.findPoint.pointList.remove(p)
                     # print(polygon.contains(point), "area1___________")
         Ip.show_pic(self.divPalm.img, "p")
@@ -59,12 +58,11 @@ class SortHotPointInArea:
         self.divPalm.FindFinger3()
         print("area3")
         for p in self.findPoint.pointList:
-            polygon = Polygon([[self.divPalm.TopLeFt[0],310],[self.divPalm.TopLeFt[0],360], self.divPalm.bottomRight,self.divPalm.bottomLeft])
+            polygon = Polygon([self.divPalm.TopLeFt,self.divPalm.TopRight,self.divPalm.bottomRight,self.divPalm.bottomLeft])
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.ListContours:
                     self.ArrayArea1.append(p)
-                    cv2.circle(self.divPalm.img, p, 4, (255, 128, 0), 2)
                     self.findPoint.pointList.remove(p)
                     # print(polygon.contains(point), "area1___________")
         Ip.show_pic(self.divPalm.img, "p")
@@ -73,12 +71,11 @@ class SortHotPointInArea:
         self.divPalm.FindFinger4()
         print("area4")
         for p in self.findPoint.pointList:
-            polygon = Polygon([[self.divPalm.TopLeFt[0],370],[self.divPalm.TopLeFt[0],430], self.divPalm.bottomRight, self.divPalm.bottomLeft])
+            polygon = Polygon([self.divPalm.TopLeFt,self.divPalm.TopRight, self.divPalm.bottomRight, self.divPalm.bottomLeft])
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.ListContours:
                     self.ArrayArea1.append(p)
-                    cv2.circle(self.divPalm.img, p, 4, (255, 128, 0), 2)
                     self.findPoint.pointList.remove(p)
                     # print(polygon.contains(point), "area1___________")
         Ip.show_pic(self.divPalm.img, "p")
@@ -87,12 +84,11 @@ class SortHotPointInArea:
         self.divPalm.FindFinger5()
         print("area5")
         for p in self.findPoint.pointList:
-            polygon = Polygon([[self.divPalm.TopLeFt[0],430], [self.divPalm.TopLeFt[0],480],[self.divPalm.bottomLeft[0],450], self.divPalm.bottomLeft])
+            polygon = Polygon([self.divPalm.TopLeFt,self.divPalm.TopRight,self.divPalm.bottomLeft, self.divPalm.bottomRight])
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.ListContours:
                     self.ArrayArea1.append(p)
-                    cv2.circle(self.divPalm.img, p, 4, (255, 128, 0), 2)
                     self.findPoint.pointList.remove(p)
                     # print(polygon.contains(point), "area1___________")
         Ip.show_pic(self.divPalm.img, "p")
