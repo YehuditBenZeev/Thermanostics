@@ -321,7 +321,6 @@ class Palm:
         # first = 0
         # temp = np.array([0, 0])  # holds: row , column
         Ip.show_pic(self.black_white_image, "image")
-
         for j in range(0, rows - 1):
             if count == 2:
                 break
