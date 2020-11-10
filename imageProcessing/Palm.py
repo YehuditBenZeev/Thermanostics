@@ -336,8 +336,7 @@ class Palm:
 
                         self.finger_width = int(distance(self.finger1.top_1, self.finger1.top_2))
                         print("348 - self.finger_width = ", self.finger_width)
-                        # print("178", self.finger1.bottom_2, self.black_white_image[self.finger1.bottom_2[0]]--
-                        # --[self.finger1.bottom_2[1]+1])
+
                         break
 
         # search for finger 3
