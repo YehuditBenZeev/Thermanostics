@@ -53,17 +53,12 @@ class DivisionPalmArea:
         self.TopRight = self.palmIn.finger2.top_2
         self.bottomLeft = self.palmIn.finger2.bottom_1
         self.bottomRight = self.palmIn.finger2.bottom_2
-        # i = self.rectTopLeFt[0]
-        # j = self.rectTopLeFt[1]
-        # cv2.circle(self.img, (i, j), 4, (255, 128, 0), 2)
-        # i = self.bottomRight[0]
-        # j = self.bottomRight[1]
-        # cv2.circle(self.img, (i, j), 4, (255, 128, 0), 2)
-        pts = np.array([[self.TopLeFt[0],self.TopLeFt[1]+20],[self.TopLeFt[0],self.TopLeFt[1]-20],self.bottomRight,self.bottomLeft], np.int32)
+        print(self.TopLeFt, self.TopRight, self.bottomRight, self.bottomLeft, "---------------")
+        pts = np.array([[self.TopLeFt[0],self.TopLeFt[1]+20],[self.TopLeFt[0],self.TopLeFt[1]-20],self.bottomLeft,self.bottomRight], np.int32)
         pts = pts.reshape((-1, 1, 2))
         cv2.polylines(self.img, [pts], True, (255, 0, 0))
         Ip.show_pic(self.img, "p")
-        print(self.TopLeFt, self.TopRight, self.bottomRight, self.bottomLeft, "++++++++++++++++++++")
+        #print(self.TopLeFt, self.TopRight, self.bottomRight, self.bottomLeft, "++++++++++++++++++++")
     def FindFinger3(self):
         self.TopLeFt = self.palmIn.finger3.top_1
         self.TopRight = self.palmIn.finger3.top_2
