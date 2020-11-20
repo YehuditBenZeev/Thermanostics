@@ -16,8 +16,8 @@ class SortHotPointInArea:
         self.ArrayArea1=[]
         self.ArrayArea2=[]
         self.ArrayArea3=[]
-        self.ArrayArea4=[]
-        self.ArrayArea5=[]
+        self.ArrayArea4 = []
+        self.ArrayArea5 = []
         self.ListContours=[]
         ret, thresh = cv2.threshold(self.image, 127, 255, 0)
         contours, hierarchy = cv2.findContours(thresh, 1, 2)
@@ -28,19 +28,21 @@ class SortHotPointInArea:
 
     def Area0(self):
         print("area 0")
+
     def Area1(self):
         self.divPalm.FindFinger1()
         print("area1")
         for p in self.findPoint.pointList:
               polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomRight, (435,109)])
               point = Point(p)
-              if polygon.contains(point) :
+              if polygon.contains(point):
                   if p not in self.ListContours:
                       self.ArrayArea1.append(p)
                       cv2.circle(self.divPalm.img, p, 4, (255, 128, 0), 2)
                       self.findPoint.pointList.remove(p)
                       #print(polygon.contains(point), "area1___________")
         Ip.show_pic(self.divPalm.img,"p")
+
     def Arae2(self):
         self.divPalm.FindFinger2()
         print("area2")
@@ -54,6 +56,7 @@ class SortHotPointInArea:
                     self.findPoint.pointList.remove(p)
                     # print(polygon.contains(point), "area1___________")
         Ip.show_pic(self.divPalm.img, "p")
+
     def Arae3(self):
         self.divPalm.FindFinger3()
         print("area3")
