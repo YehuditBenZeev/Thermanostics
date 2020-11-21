@@ -1,5 +1,6 @@
 /.idea/
 imageProcessing/__pycache__/
+
 *.bmp
 *.jpg
 *.PNG
