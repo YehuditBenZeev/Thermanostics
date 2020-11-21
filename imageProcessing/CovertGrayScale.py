@@ -201,7 +201,9 @@ def rotate_image(rotate_img):
     # show_pic(black_white_image, "black_white_image")
 
     rows, columns = rotate_img.shape
+
     print("rows, columns", rows, columns)
+
     mid_wrist = int((bottom_wrist - top_wrist) / 2) + top_wrist
 
     left_point_x, left_point_y = detect_most_left_border_point(black_white_image)
@@ -221,9 +223,8 @@ def rotate_image(rotate_img):
     '''while abs(mid_wrist - left_point_x) > 6:
         print("mid_wrist , left_point_x: ", mid_wrist, left_point_x)
         left_point_x, left_point_y = detect_most_left_border_point(black_white_image)
-        for angle in np.arange(0, 360, 6):
-            aaa = imutils.rotate(rotate_img, angle)
-        rotate_img = aaa
+        for angle in np.arange(0, 360, 4):
+            rotate_img = imutils.rotate(rotate_img, angle)
         show_pic(rotate_img, "rotate")
 
     show_pic(aaa, "done to rotate")'''

@@ -4,3 +4,4 @@ imageProcessing/__pycache__/
 *.jpg
 *.PNG
 try.py
+*.xlsx
