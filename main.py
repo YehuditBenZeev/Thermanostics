@@ -1,10 +1,10 @@
 
-from imageProcessing import CovertGrayScale, Palm as Pn, SortHotPointInArea as Sort
+from imageProcessing import CovertGrayScale , Palm as Pn, SortHotPointInArea as Sort
 import cv2
 
 ####################################################
 # ------------ class  Image_Processing ------------------#
-link = "Im1.jpg"
+link = "506 RF.bmp"
 image = cv2.imread(link)
 print(image.shape)
 # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -19,6 +19,7 @@ print(image.shape)
 # image = CovertGrayScale.rotate_image(gray)
 # CovertGrayScale.show_pic(image, "main")
 a = CovertGrayScale.ImageProcessing(link)
+a.black_border()
 # a = Image_Processing(link)
 # a.black_border()
 image = a.convert_image_to_gray_scale()
@@ -38,10 +39,10 @@ image = a.convert_image_to_gray_scale()
 # b.draw_on_point()
 # b.detect_palm_points()
 
-s = Sort.SortHotPointInArea(image, link, 20)
-# s.Area0()
-s.Area1()
-s.Arae2()
-s.Arae3()
-s.Arae4()
-s.Arae5()
+# s = Sort.SortHotPointInArea(image, link, 20)
+# # s.Area0()
+# s.Area1()
+# s.Arae2()
+# s.Arae3()
+# s.Arae4()
+# s.Arae5()

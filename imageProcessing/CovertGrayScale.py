@@ -81,7 +81,7 @@ class ImageProcessing:
                     mask[j][i] = 255
 
         # show_pic(mask, "edge")
-        # show_pic(self.image, "edge")
+        show_pic(self.image, "edge")
         mask = cv2.Canny(border, 350, 500)
         # show_pic(mask, "edge")
 

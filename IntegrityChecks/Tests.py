@@ -24,7 +24,7 @@ def read_from_file(file_name):  # reads csv files
     with open(file_name, 'r') as infile:
         csv_writer = csv.DictReader(infile)
         for row in csv_writer:
-            point_list.append(ObjectTest(False, (row['X'], row['Y'])))
+            point_list.append(ObjectTest(False, (int(row['X']), int(row['Y']))))
     return point_list
 
 
@@ -41,7 +41,7 @@ class Tests:
     def __init__(self):
         self.expected_points = read_from_file("Test.csv")
         self.detected_points = read_from_file("out.csv")
-        self.false_detected_counter = 0
+
 
     def check_detected_points(self):
         # open file to read point
@@ -71,10 +71,11 @@ class Tests:
         for point in self.expected_points:
             if not point.boolean:
                 false_negative += 1
+        print("true_positive,true_negative,false_positive,false_negative",true_positive,true_negative,false_positive,false_negative)
+
 
 
 if __name__ == "__main__":
     a = Tests()
-    # convert_exel_csv("15982 table.xlsx")
-
-
+    a.check_detected_points()
+    a.check_success()
