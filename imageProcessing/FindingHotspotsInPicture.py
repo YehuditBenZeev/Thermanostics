@@ -15,11 +15,11 @@ from imageProcessing import CovertGrayScale as Ip
 
 
 class FindingHotspotsInPicture:
-    def __init__(self, processed_image, path):
+    def __init__(self, processed_image):
         self.image = processed_image
         self.number_tuple = (0, 0)
         self.pointList=[]
-        self.h , self.w=self.image.shape
+        self.h , self.w= self.image.shape
         self.img = np.array(self.image)
         Ip.show_pic(self.image, "black")
 
