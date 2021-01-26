@@ -38,10 +38,9 @@ def distance(point1, point2):
 
 
 class Tests:
-    def __init__(self):
-        self.expected_points = read_from_file("Test.csv")
-        self.detected_points = read_from_file("out.csv")
-
+    def __init__(self,expected_points,detected_points):
+        self.expected_points = read_from_file(expected_points) #algoritm
+        self.detected_points = read_from_file(detected_points) #alona
 
     def check_detected_points(self):
         # open file to read point
@@ -57,10 +56,11 @@ class Tests:
         return False
 
     def check_success(self):
-        true_positive = 0
-        true_negative = 0
-        false_positive = 0
-        false_negative = 0
+        true_positive = 0 #The algorithm predicted a hot spot and there
+        true_negative = 0 # The algorithm predicted that there is no hot spot and no
+        false_positive = 0 #The algorithm predicted that there is no hotspot but there is
+        false_negative = 0 #The algorithm predicted that there is no hotspot but there is
+        print(self.detected_points[0].boolean,self.expected_points[0].boolean)
 
         for point in self.detected_points:
             if point.boolean:
@@ -69,6 +69,7 @@ class Tests:
                 false_positive += 1
 
         for point in self.expected_points:
+            print(point.point,"--")
             if not point.boolean:
                 false_negative += 1
         print("true_positive,true_negative,false_positive,false_negative",true_positive,true_negative,false_positive,false_negative)
@@ -76,6 +77,6 @@ class Tests:
 
 
 if __name__ == "__main__":
-    a = Tests()
+    a = Tests("algoritm_505_LB.csv","alona_505_LB.csv")
     a.check_detected_points()
     a.check_success()

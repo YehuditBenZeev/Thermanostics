@@ -75,7 +75,7 @@ if __name__ == "__main__":
             # Go through all the points of the palm in area 0
             print(a.find_new_location((301, 200)))
             print(a.find_new_location((319, 129)))
-
+#_______________________________________________________________________
     # open the point table from imageJ
     # reader=csv.DictReader(open("Results.csv"))
     # print(row0)
