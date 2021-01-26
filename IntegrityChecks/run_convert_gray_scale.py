@@ -1,8 +1,7 @@
 import matplotlib.pyplot as plt
-import os, sys
+import os
 import glob
-import numpy as np
-import argparse
+
 from imageProcessing import ConvertGrayScale
 
 # sys.path.append(os.path.dirname(os.path.abspath("../")))

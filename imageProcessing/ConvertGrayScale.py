@@ -152,7 +152,7 @@ def edge(path):
     plt.title("image_b_w")
     plt.imshow(image_b_w, cmap=plt.get_cmap('gray'))
 
-    plt.show(block=True)
+    # plt.show(block=True)
     # h, w, c = img.shape
     # new_image = np.ones((h, w), dtype=int) * 250
     #
@@ -217,7 +217,7 @@ class ImageProcessing:
                     mask[j][i] = 255
 
         # show_pic(mask, "edge")
-        # show_pic(self.image, "edge")
+        show_pic(self.image, "edge")
         mask = cv2.Canny(border, 350, 500)
         # show_pic(mask, "edge")
 
@@ -225,8 +225,6 @@ class ImageProcessing:
         h, w, c = self.image.shape
         # calculate the center of the image
         center = (w / 2, h / 2)
-
-
 
         angle = 180
 
@@ -245,7 +243,6 @@ class ImageProcessing:
 
         if ("LF." in self.name) or ("RB." in self.name):
             self.flip_image()
-
 
         b_w_image = edge_detecting(gray, 100, 200)
         show_pic(b_w_image, "edge")
