@@ -2,7 +2,7 @@ import cv2
 from imageProcessing import DivisionPalmArea as Div, FindingHotspotsInPicture as Find
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
-from imageProcessing import CovertGrayScale as Ip
+from imageProcessing import ConvertGrayScale as Ip
 
 
 class SortHotPointInArea:

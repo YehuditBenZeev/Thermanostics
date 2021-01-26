@@ -41,7 +41,6 @@ class Tests:
     def __init__(self):
         self.expected_points = read_from_file("Test.csv")
         self.detected_points = read_from_file("out.csv")
-        self.false_detected_counter = 0
 
     def check_detected_points(self):
         # open file to read point
@@ -72,9 +71,12 @@ class Tests:
             if not point.boolean:
                 false_negative += 1
 
+        print("true_negative, true_positive, false_positive, false_negative", true_negative, true_positive, false_positive, false_negative)
+
 
 if __name__ == "__main__":
     a = Tests()
+    a.check_detected_points()
     # convert_exel_csv("15982 table.xlsx")
 
 

@@ -1,6 +1,5 @@
 import cv2
-import numpy as np
-from imageProcessing import CovertGrayScale as Ip, Finger as Fn
+from imageProcessing import ConvertGrayScale as Ip, Finger as Fn
 
 
 def inclination_between_two_points(temp, k, l):

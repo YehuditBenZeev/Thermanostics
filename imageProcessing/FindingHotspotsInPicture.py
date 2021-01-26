@@ -7,7 +7,7 @@ import argparse
 #import mahotas
 from openpyxl import load_workbook
 import pandas as pd
-from imageProcessing import CovertGrayScale as Ip
+from imageProcessing import ConvertGrayScale as Ip
 
 
 
