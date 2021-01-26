@@ -1,0 +1,10 @@
+/.idea/
+imageProcessing/__pycache__/
+__pycache__/
+
+*.bmp
+*.jpg
+*.PNG
+*.csv
+try.py
+*.xlsx
