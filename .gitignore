@@ -2,6 +2,7 @@
 imageProcessing/__pycache__/
 __pycache__/
 
+images/
 *.bmp
 *.jpg
 *.PNG
