@@ -1,6 +1,6 @@
 import cv2
+from imageProcessing import ConvertGrayScale as Ip, Finger as Fn
 import numpy as np
-from imageProcessing import CovertGrayScale as Ip, Finger as Fn
 
 
 def inclination_between_two_points(temp, k, l):
@@ -96,7 +96,7 @@ class Palm:
 
     def find_max_for_palm(self):  # -------------------------
 
-        #Ip.show_pic(self.image, "image")
+        # Ip.show_pic(self.image, "image")
 
         (minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(self.image)
         print("101 - ", minVal, maxVal, minLoc, maxLoc)
