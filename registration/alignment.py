@@ -43,7 +43,7 @@ def find_points(points, homography):
     return transformed
 
 
-def main(pic_number, image_link):
+def get_points(pic_number, image_link):
     ref_image_link = ''
     if 'RF' in image_link:
         ref_image_link = "../images/514 RF.bmp"
