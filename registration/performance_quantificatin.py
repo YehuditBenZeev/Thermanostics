@@ -18,7 +18,7 @@ def quatification():
 
         real_points = np.float64([[[245, 47],[107,133],[73,173],[93,217],[141,303]]])
         print(real_points.shape, "_________________")
-        v=map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 <5 else False,(points[0],real_points[0]))
+        v=map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 <5 else False,zip(points[0],real_points[0]))
         print(list(v))
 
 
