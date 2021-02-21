@@ -89,7 +89,7 @@ def run_test():
     image_list = glob.glob(os.path.join("../514 images", '*.bmp'))
     for i, image_path in enumerate(image_list):
         image = plt.imread(image_path)
-        transformed = main(i, image_path)
+        transformed = get_points(i, image_path)
         sow_points_on_image(i, image, image_path, transformed)
     plt.show(block=True)
 
