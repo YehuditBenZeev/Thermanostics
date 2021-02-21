@@ -6,6 +6,8 @@ import pandas as pd
 import csv
 
 
+
+
 def show_pic(image, name):
     window_name = name
     cv2.imshow(window_name, image)
