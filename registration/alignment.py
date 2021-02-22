@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib import pylab as plt
 import os
 import glob
-import akaze
+from registration import akaze
 
 MAX_MATCHES = 1000
 GOOD_MATCH_PERCENT = 0.2
