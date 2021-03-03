@@ -5,6 +5,7 @@ from matplotlib import pylab as plt
 import os
 import glob
 from registration import akaze
+from registration import rob
 
 MAX_MATCHES = 1000
 GOOD_MATCH_PERCENT = 0.2
@@ -43,37 +44,28 @@ def find_points(points, homography):
     return transformed
 
 
-def get_points(pic_number, image_link):
-    ref_image_link = ''
-    if 'RF' in image_link:
-        ref_image_link = "../images/514 RF.bmp"
-    elif 'RB' in image_link:
-        ref_image_link = "../images/514 RB.bmp"
-    if 'LF' in image_link:
-        ref_image_link = "../images/514 LF.bmp"
-    if 'LB' in image_link:
-        ref_image_link = "../images/514 LB.bmp"
+def get_points(ref_image_link, image_link, ref_image_points):
 
     print("Reading reference image : ", ref_image_link)
-    imReference = cv2.imread(ref_image_link, cv2.IMREAD_COLOR)
+    im_reference = cv2.imread(ref_image_link, cv2.IMREAD_COLOR)
+
     print("Reading image to align : ", image_link)
     im = cv2.imread(image_link, cv2.IMREAD_COLOR)
 
     print("Aligning images ...")
     # Registered image will be resotred in imReg.
     # The estimated homography will be stored in h.
-    imReg, homography = akaze.align_images(imReference, im)
+    imReg, homography = akaze.align_images(im_reference, im)
 
-    points = np.float64([[[215, 36], [44, 153], [19, 225], [55, 270], [105, 303]]])
-    transformed = find_points(points, homography)
-    # Write aligned image to disk.
-    outFilename = "aligned.jpg"
-    print("Saving aligned image : ", outFilename)
-    cv2.imwrite(outFilename, imReg)
+    transformed_points = find_points(ref_image_points, homography)
+    # # Write aligned image to disk.
+    # outFilename = "aligned.jpg"
+    # print("Saving aligned image : ", outFilename)
+    # cv2.imwrite(outFilename, imReg)
 
     # Print estimated homography
     print("Estimated homography : \n", homography)
-    return transformed
+    return transformed_points
 
 
 def sow_points_on_image(fig_num, image, image_path, points):

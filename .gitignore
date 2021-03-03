@@ -9,3 +9,5 @@ images/
 *.csv
 try.py
 *.xlsx
+*.txt
+*.tfm

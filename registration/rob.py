@@ -6,7 +6,7 @@ MAX_MATCHES = 500
 GOOD_MATCH_PERCENT = 0.15
 
 
-def alignImages(im1, im2):
+def align_images(im1, im2):
     # Convert images to grayscale
     im1Gray = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
     im2Gray = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)

@@ -9,29 +9,86 @@ from IntegrityChecks import registration_data as data
 # import registration_data as data
 
 
+def sum_map(map_):
+    counter = 0
+    for item in map_:
+        if item == True:
+            counter += 1
+    return counter
+
+
 def quantification():
-    image_list = glob.glob(os.path.join("../test_images", '*.bmp'))
+    # image_list = glob.glob(os.path.join("../test_images", '*.bmp'))
     # for i, image_path in enumerate(image_list):
     i = 0
-    true_counter = 0
-    false_counter = 0
-    for image_path, real_points in data.images_514.items():
-        #image = plt.imread(image_path)
-        points = alignment.get_points(i, image_path)
-        print(points.shape, "_________________")
+    # true_counter = 0
+    # false_counter = 0
+    dict_counter = {
+        'true': 0,
+        'false': 0
+    }
 
-        real_points = np.float64([[[245, 47], [107, 133], [73, 173], [93, 217], [141, 303]]])
-        print(real_points.shape, "_________________")
-        bool_array = map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 5 else False, zip(points[0], real_points[0]))
+    dict_counter_514 = {
+        'true': 0,
+        'false': 0
+    }
+
+    for image_path, real_points in data.images_514.items():
+        ref_image_link = "../images/514 RF.bmp"
+        ref_image_points = data.image_ref['RF_514']
+
+        points = alignment.get_points(ref_image_link, image_path, ref_image_points)
+
+        bool_array = list(map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 10 else False, zip(points[0], real_points[0])))
         ture_in_arr = np.sum(bool_array)
-        true_counter += ture_in_arr
-        false_counter += (len(bool_array) - ture_in_arr)
+        dict_counter_514['true'] += ture_in_arr
+        dict_counter_514['false'] += (len(bool_array) - ture_in_arr)
+        i += 1
+
+    for image_path, real_points in data.images.items():
+        ref_image_link = ''
+        ref_image_points = np.float64([[[]]])
+        if 'RF' in image_path:
+            ref_image_link = "../images/514 RF.bmp"
+            ref_image_points = data.image_ref['RF_514']
+        elif 'RB' in image_path:
+            ref_image_link = "../images/514 RB.bmp"
+            ref_image_points = data.image_ref['RB_514']
+        elif 'LF' in image_path:
+            ref_image_link = "../images/514 LF.bmp"
+            ref_image_points = data.image_ref['LF_514']
+        elif 'LB' in image_path:
+            ref_image_link = "../images/514 LB.bmp"
+            ref_image_points = data.image_ref['LB_514']
+
+        points = alignment.get_points(ref_image_link, image_path, ref_image_points)
+
+        bool_array = list(map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 10 else False, zip(points[0], real_points[0])))
+        ture_in_arr = np.sum(bool_array)
+
+        dict_counter['true'] += ture_in_arr
+        dict_counter['false'] += (len(bool_array) - ture_in_arr)
         i += 1
 
     plt.show(block=True)
+    with open("registration.txt", "a") as out_file:
+
+        out_file.write("akaze:\n\tregistration test 514 image result.\n")
+        for item in dict_counter_514:
+            out_file.write("\t\t" + item + ": " + str(dict_counter_514[item]) + "\n")
+        out_file.write("\t\tsuccess: " + str((dict_counter_514['true'] / (dict_counter_514['true'] + dict_counter_514['false']))*100) + "%\n\n")
+
+        out_file.write("\tregistration test all images result.\n")
+        for item in dict_counter:
+            out_file.write("\t\t" + item + ": " + str(dict_counter[item]) + "\n")
+        out_file.write("\t\tsuccess: " + str((dict_counter['true'] / (dict_counter['true'] + dict_counter['false']))*100) + "%\n\n")
+    print(dict_counter)
 
 
 if __name__ == '__main__':
     quantification()
     # v = [True, True, False, False, True]
-    # print(np.sum(v))
+    # sum_ = np.sum(v)
+    # print(type(sum_))
+
+
