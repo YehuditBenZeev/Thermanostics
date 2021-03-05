@@ -8,7 +8,7 @@ from skimage.registration import optical_flow_tvl1  #, optical_flow_ilk
 from skimage.transform import resize
 
 
-def try_package():
+def try_package(link1, link2):
     image1 = io.imread("../images/514 RF.bmp")
     image2 = io.imread("../images/515 RF.bmp")
 
@@ -86,4 +86,6 @@ def try_package():
 
 
 if __name__ == "__main__":
-    try_package()
+    link1 = "../images/514 RF.bmp"
+    link2 = "../images/515 RF.bmp"
+    try_package(link1, link2)

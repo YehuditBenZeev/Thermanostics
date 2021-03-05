@@ -1,8 +1,63 @@
-# import cv2
-# import numpy as np
-# from matplotlib import pylab as plt
-#
-#
+import cv2
+import numpy as np
+from matplotlib import pylab as plt
+
+MAX_MATCHES = 500
+GOOD_MATCH_PERCENT = 0.15
+MIN_MATCH_COUNT = 4
+
+
+def align_images(im1, im2):
+    # # Convert images to grayscale
+    # im1Gray = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
+    # im2Gray = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
+
+    # Detect ORB features and compute descriptors.
+    sift = cv2.SIFT_create()
+
+    keypoints1, descriptors1 = sift.detectAndCompute(im1, None)
+    keypoints2, descriptors2 = sift.detectAndCompute(im2, None)
+
+    FLANN_INDEX_KDTREE = 1
+    index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
+    search_params = dict(checks=50)
+    flann = cv2.FlannBasedMatcher(index_params, search_params)
+    matches = flann.knnMatch(descriptors1, descriptors2, k=2)
+
+    good = []
+    for m, n in matches:
+        if m.distance < 0.7 * n.distance:
+            good.append(m)
+
+    if len(good) > MIN_MATCH_COUNT:
+        src_pts = np.float32([keypoints1[m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
+        dst_pts = np.float32([keypoints2[m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
+        M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
+        matchesMask = mask.ravel().tolist()
+        h, w, d = im1.shape
+        pts = np.float32([[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]).reshape(-1, 1, 2)
+        dst = cv2.perspectiveTransform(pts, M)
+        img2 = cv2.polylines(im2, [np.int32(dst)], True, 255, 3, cv2.LINE_AA)
+    else:
+        print("Not enough matches are found - {}/{}".format(len(good), MIN_MATCH_COUNT))
+        matchesMask = None
+
+    draw_params = dict(matchColor=(0, 255, 0),  # draw matches in green color
+                       singlePointColor=None,
+                       matchesMask=matchesMask,  # draw only inliers
+                       flags=2)
+    img3 = cv2.drawMatches(im1, keypoints1, im2, keypoints2, good, None, **draw_params)
+    plt.imshow(img3, 'gray'), plt.show()
+
+    # Find homography
+    h, mask = cv2.findHomography(pts, dst, cv2.RANSAC)
+
+    # Use homography
+    height, width, channels = im2.shape
+    im1Reg = cv2.warpPerspective(im1, h, (width, height))
+
+    return im1Reg, h
+
 # # reading image in grayscale
 # img = cv2.imread("../images/514 RF.bmp", cv2.IMREAD_GRAYSCALE)
 #
