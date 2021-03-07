@@ -7,7 +7,7 @@ GOOD_MATCH_PERCENT = 0.15
 MIN_MATCH_COUNT = 4
 
 
-def align_images(im1, im2):
+def get_homography(im1, im2):
     # # Convert images to grayscale
     # im1Gray = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
     # im2Gray = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)

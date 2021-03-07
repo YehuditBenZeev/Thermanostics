@@ -58,7 +58,7 @@ def get_points(ref_image_link, image_link, ref_image_points):
     # Registered image will be resotred in imReg.
     # The estimated homography will be stored in h.
 
-    imReg, homography = orb.align_images_good_features(im_reference, im)
+    imReg, homography = orb.get_homography_good_features(im_reference, im)
     # imReg, homography = rob.align_images_harris(ref_image_link, image_link)
 
     transformed_points = find_points(ref_image_points, homography)

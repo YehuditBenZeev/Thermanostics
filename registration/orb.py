@@ -8,7 +8,7 @@ MAX_MATCHES = 500
 GOOD_MATCH_PERCENT = 0.15
 
 
-def align_images(im1, im2):
+def get_homography(im1, im2):
     # Convert images to grayscale
     im1Gray = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
     im2Gray = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
@@ -61,7 +61,7 @@ def align_images(im1, im2):
 # print(cv2.__version__)
 
 
-def align_images_good_features(im1, im2):
+def get_homography_good_features(im1, im2):
     gray1 = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
     orb = cv2.ORB_create()
     corners = cv2.goodFeaturesToTrack(gray1, 1000, 0.01, 10)
@@ -97,7 +97,7 @@ def align_images_good_features(im1, im2):
     return im1Reg, h
 
 
-def align_images_harris(link1, link2):
+def get_homography_harris(link1, link2):
     im1 = cv2.imread(link1, cv2.IMREAD_COLOR)
     im2 = cv2.imread(link2, cv2.IMREAD_COLOR)
 

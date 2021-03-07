@@ -5,7 +5,7 @@ MAX_MATCHES = 1000
 GOOD_MATCH_PERCENT = 0.2
 
 
-def align_images(im1, im2):
+def get_homography(im1, im2):
     im1Gray = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
     im2Gray = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
 
@@ -47,7 +47,7 @@ def align_images(im1, im2):
     return im1Reg, homography
 
 
-def align_images_good_features(im1, im2):
+def get_homography_good_features(im1, im2):
     akaze = cv2.AKAZE_create()
 
     gray1 = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)

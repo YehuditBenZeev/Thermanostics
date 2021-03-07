@@ -3,7 +3,7 @@ import cv2 as cv
 from matplotlib import pyplot as plt
 
 
-def align_images(img1, img2):
+def get_homography(img1, img2):
     # img1 = cv.imread('506 RF.bmp')
     gray1 = cv.cvtColor(img1, cv.COLOR_BGR2GRAY)
     orb = cv.ORB_create()
@@ -65,4 +65,4 @@ if __name__ == "__main__":
     image_link = "../images/509 RF.bmp"
     im_reference = cv.imread(ref_image_link, cv.IMREAD_COLOR)
     im = cv.imread(image_link, cv.IMREAD_COLOR)
-    im1Reg, h = align_images(im_reference, im)
+    im1Reg, h = get_homography(im_reference, im)
