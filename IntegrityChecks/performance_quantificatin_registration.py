@@ -63,7 +63,7 @@ def quantification():
 
         points = alignment.get_points(ref_image_link, image_path, ref_image_points)
 
-        bool_array = list(map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 10 else False, zip(points[0], real_points[0])))
+        bool_array = list(map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 15 else False, zip(points[0], real_points[0])))
         ture_in_arr = np.sum(bool_array)
 
         dict_counter['true'] += ture_in_arr
@@ -73,15 +73,17 @@ def quantification():
     plt.show(block=True)
     with open("registration.txt", "a") as out_file:
 
-        out_file.write("akaze:\n\tregistration test 514 image result.\n")
+        out_file.write("try good features orb:\n\tregistration test 514 image result.\n")
         for item in dict_counter_514:
             out_file.write("\t\t" + item + ": " + str(dict_counter_514[item]) + "\n")
-        out_file.write("\t\tsuccess: " + str((dict_counter_514['true'] / (dict_counter_514['true'] + dict_counter_514['false']))*100) + "%\n\n")
+        percent_514 = (dict_counter_514['true'] / (dict_counter_514['true'] + dict_counter_514['false']))*100
+        out_file.write("\t\tsuccess: {:.2f} %\n\n".format(percent_514))
 
         out_file.write("\tregistration test all images result.\n")
         for item in dict_counter:
             out_file.write("\t\t" + item + ": " + str(dict_counter[item]) + "\n")
-        out_file.write("\t\tsuccess: " + str((dict_counter['true'] / (dict_counter['true'] + dict_counter['false']))*100) + "%\n\n")
+        percent_all = (dict_counter['true'] / (dict_counter['true'] + dict_counter['false']))*100
+        out_file.write("\t\tsuccess: {:.2f} %\n\n".format(percent_all))
     print(dict_counter)
 
 
