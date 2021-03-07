@@ -149,3 +149,4 @@ def align_images(im1, im2):
 # img_1 = cv2.drawKeypoints(gray1,keypoints_1,img1)
 # plt.imshow(img_1)
 # cv2.waitKey(0)
+print(cv2.__version__)

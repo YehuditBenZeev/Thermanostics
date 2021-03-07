@@ -5,8 +5,9 @@ from matplotlib import pylab as plt
 import os
 import glob
 from registration import akaze
-from registration import rob
+from registration import orb
 from registration import sift_cv
+from registration import good_features_orb
 
 MAX_MATCHES = 1000
 GOOD_MATCH_PERCENT = 0.2
@@ -57,7 +58,7 @@ def get_points(ref_image_link, image_link, ref_image_points):
     # Registered image will be resotred in imReg.
     # The estimated homography will be stored in h.
 
-    imReg, homography = sift_cv.align_images(im_reference, im)
+    imReg, homography = orb.align_images_good_features(im_reference, im)
     # imReg, homography = rob.align_images_harris(ref_image_link, image_link)
 
     transformed_points = find_points(ref_image_points, homography)
