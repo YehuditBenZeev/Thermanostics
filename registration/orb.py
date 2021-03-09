@@ -8,7 +8,7 @@ MAX_MATCHES = 500
 GOOD_MATCH_PERCENT = 0.15
 
 
-def get_homography(im1, im2):
+def get_matching_points(im1, im2):
     # Convert images to grayscale
     im1Gray = cv.cvtColor(im1, cv.COLOR_BGR2GRAY)
     im2Gray = cv.cvtColor(im2, cv.COLOR_BGR2GRAY)
@@ -41,19 +41,10 @@ def get_homography(im1, im2):
         points1[i, :] = keypoints1[match.queryIdx].pt
         points2[i, :] = keypoints2[match.trainIdx].pt
 
-    print("points1, ", (points1[0][0]))
-    print("points2, ", (points2[0][0]))
-    # Find homography
-    h, mask = cv.findHomography(points1, points2, cv.RANSAC)
-
-    # Use homography
-    height, width, channels = im2.shape
-    im1Reg = cv.warpPerspective(im1, h, (width, height))
-
-    return im1Reg, h
+    return points1, points2
 
 
-def get_homography_good_features(im1, im2):
+def get_matching_points_good_features(im1, im2):
     gray1 = cv.cvtColor(im1, cv.COLOR_BGR2GRAY)
     orb = cv.ORB_create()
     points1 = cv.goodFeaturesToTrack(gray1, 1000, 0.01, 10)
@@ -80,16 +71,10 @@ def get_homography_good_features(im1, im2):
         points1[i, :] = kps1[match.queryIdx].pt
         points2[i, :] = kps2[match.trainIdx].pt
 
-    h, mask = cv.findHomography(points1, points2, cv.RANSAC)
-
-    # Use homography
-    height, width, channels = im2.shape
-    im1Reg = cv.warpPerspective(im1, h, (width, height))
-
-    return im1Reg, h
+    return points1, points2
 
 
-def get_homography_harris(link1, link2):
+def get_matching_points_harris(link1, link2):
     im1 = cv.imread(link1, cv.IMREAD_COLOR)
     im2 = cv.imread(link2, cv.IMREAD_COLOR)
 
@@ -126,14 +111,7 @@ def get_homography_harris(link1, link2):
     # img3 = cv.drawMatches(im1, kps1, im2, kps2, matches, None, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
     # plt.imshow(img3), plt.show()
 
-    # Find homography
-    h, mask = cv.findHomography(points1, points2, cv.RANSAC)
-
-    # Use homography
-    height, width, channels = im2.shape
-    im1Reg = cv.warpPerspective(im1, h, (width, height))
-
-    return im1Reg, h
+    return points1, points2
 
 
 if __name__ == "__main__":

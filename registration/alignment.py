@@ -1,5 +1,5 @@
 from __future__ import print_function
-import cv2
+import cv2 as cv
 import numpy as np
 from matplotlib import pylab as plt
 import os
@@ -18,17 +18,17 @@ def try_():
     source = np.array([[0, 0], [100, 0], [100, 100], [0, 100]])
     dest = np.array([[0, 0], [-1000, 0], [-1000, -1000], [0, -1000]])
     points = np.float32([[[50, 50]]])
-    homography, _ = cv2.findHomography(source, dest)
+    homography, _ = cv.findHomography(source, dest)
     # print(source.shape)
     # print(homography.shape)
     # print(homography)
     # print(type(homography))
     # print(type(homography[0, 0]))
-    transformed = cv2.perspectiveTransform(points, homography)
+    transformed = cv.perspectiveTransform(points, homography)
     # print(transformed)
     # => [[[-500. -500.]]]
     homography_inverse = np.linalg.inv(homography)
-    detransformed = cv2.perspectiveTransform(transformed, homography_inverse)
+    detransformed = cv.perspectiveTransform(transformed, homography_inverse)
     # print(detransformed)
     # => [[[50. 50.]]]
 
@@ -38,7 +38,7 @@ def find_points(points, homography):
         # print(points.shape)
         # print(homography.shape)
         # homography_inverse = np.linalg.inv(homography)
-        transformed = cv2.perspectiveTransform(points, homography)
+        transformed = cv.perspectiveTransform(points, homography)
         # print(transformed)
     except Exception as e:
         print(e)
@@ -50,23 +50,26 @@ def find_points(points, homography):
 def get_points(ref_image_link, image_link, ref_image_points):
 
     # print("Reading reference image : ", ref_image_link)
-    im_reference = cv2.imread(ref_image_link, cv2.IMREAD_COLOR)
+    im_reference = cv.imread(ref_image_link, cv.IMREAD_COLOR)
 
     # print("Reading image to align : ", image_link)
-    im = cv2.imread(image_link, cv2.IMREAD_COLOR)
+    im = cv.imread(image_link, cv.IMREAD_COLOR)
 
     # print("Aligning images ...")
     # Registered image will be resotred in imReg.
     # The estimated homography will be stored in h.
 
-    imReg, homography = orb.get_homography_good_features(im_reference, im)
+    points1, points2 = orb.get_matching_points(im_reference, im)
     # imReg, homography = orb.get_homography_harris(ref_image_link, image_link)
+
+    # Find homography
+    homography, mask = cv.findHomography(points1, points2, cv.RANSAC)
 
     transformed_points = find_points(ref_image_points, homography)
     # # Write aligned image to disk.
     # outFilename = "aligned.jpg"
     # print("Saving aligned image : ", outFilename)
-    # cv2.imwrite(outFilename, imReg)
+    # cv.imwrite(outFilename, imReg)
 
     # Print estimated homography
     # print("Estimated homography : \n", homography)
@@ -103,7 +106,9 @@ if __name__ == '__main__':
     refFilename = "../images/514 RF.bmp"
     Filename = "../images/509 RF.bmp"
     # print("Reading reference image : ", refFilename)
-    # imReference = cv2.imread(refFilename, cv2.IMREAD_COLOR)
+    im1 = cv.imread(Filename, cv.IMREAD_COLOR)
+    im2= np.array(im1)
+
 
     # Read image to be aligned
     #main("../514 images/514 RF.bmp")
@@ -113,4 +118,12 @@ if __name__ == '__main__':
     # print("2: \n", po[0, :, 0])
     # print("3: \n", po[0, :, 1])
     # run_test()
-    get_points(refFilename, Filename, np.float64([[[470, 276], [452, 146], [386, 90], [320, 114], [280, 134], [230, 130], [216, 230], [262, 310], [342, 316]]]))
+    x=get_points(refFilename, Filename, np.float64([[[470, 276], [452, 146], [386, 90], [320, 114], [280, 134], [230, 130], [216, 230], [262, 310], [342, 316]]]))
+    print("______________________")
+    print(x)
+    for i in x[0]:
+        print(i,"i")
+        cv.circle(im2,(int(i[1]),int(i[0])), 2, (255,0,0), 1)
+    cv.imshow("im",im2)
+    cv.waitKey(0)
+    #plt.imshow(im2)
