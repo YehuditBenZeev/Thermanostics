@@ -8,6 +8,7 @@ from registration import akaze
 from registration import orb
 from registration import sift_cv
 from registration import good_features_orb
+from registration import surf_cv
 
 MAX_MATCHES = 1000
 GOOD_MATCH_PERCENT = 0.2
@@ -59,7 +60,7 @@ def get_points(ref_image_link, image_link, ref_image_points):
     # The estimated homography will be stored in h.
 
     imReg, homography = orb.get_homography_good_features(im_reference, im)
-    # imReg, homography = rob.align_images_harris(ref_image_link, image_link)
+    # imReg, homography = orb.get_homography_harris(ref_image_link, image_link)
 
     transformed_points = find_points(ref_image_points, homography)
     # # Write aligned image to disk.

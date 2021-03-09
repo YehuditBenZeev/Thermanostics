@@ -1,20 +1,9 @@
 #from alignment import get_point
 from __future__ import print_function
 from matplotlib import pylab as plt
-import os
-import glob
 from registration import alignment
 import numpy as np
 from IntegrityChecks import registration_data as data
-# import registration_data as data
-
-
-def sum_map(map_):
-    counter = 0
-    for item in map_:
-        if item == True:
-            counter += 1
-    return counter
 
 
 def quantification():
