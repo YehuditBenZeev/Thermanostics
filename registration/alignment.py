@@ -4,10 +4,13 @@ import numpy as np
 from matplotlib import pylab as plt
 import os
 import glob
-from registration import akaze
-from registration import orb
-from registration import sift_cv
-from registration import good_features_orb
+from Thermanostics.registration import sift_cv
+
+
+# from registration import akaze
+# from registration import orb
+#from registration import sift_cv
+# from registration import good_features_orb
 
 MAX_MATCHES = 1000
 GOOD_MATCH_PERCENT = 0.2
@@ -57,8 +60,9 @@ def get_points(ref_image_link, image_link, ref_image_points):
     # print("Aligning images ...")
     # Registered image will be resotred in imReg.
     # The estimated homography will be stored in h.
-
-    imReg, homography = orb.get_homography_good_features(im_reference, im)
+    simReg, homography = sift_cv.get_homography(im_reference, im)
+    #print(homography,"-------")
+    #print(simReg)
     # imReg, homography = rob.align_images_harris(ref_image_link, image_link)
 
     transformed_points = find_points(ref_image_points, homography)
@@ -102,7 +106,9 @@ if __name__ == '__main__':
     refFilename = "../images/514 RF.bmp"
     Filename = "../images/509 RF.bmp"
     # print("Reading reference image : ", refFilename)
-    # imReference = cv2.imread(refFilename, cv2.IMREAD_COLOR)
+    im1 = cv2.imread(Filename, cv2.IMREAD_COLOR)
+    im2= np.array(im1)
+
 
     # Read image to be aligned
     #main("../514 images/514 RF.bmp")
@@ -112,4 +118,12 @@ if __name__ == '__main__':
     # print("2: \n", po[0, :, 0])
     # print("3: \n", po[0, :, 1])
     # run_test()
-    get_points(refFilename, Filename, np.float64([[[470, 276], [452, 146], [386, 90], [320, 114], [280, 134], [230, 130], [216, 230], [262, 310], [342, 316]]]))
+    x=get_points(refFilename, Filename, np.float64([[[470, 276], [452, 146], [386, 90], [320, 114], [280, 134], [230, 130], [216, 230], [262, 310], [342, 316]]]))
+    print("______________________")
+    print(x)
+    for i in x[0]:
+        print(i,"i")
+        cv2.circle(im2,(int(i[1]),int(i[0])), 2, (255,0,0), 1)
+    cv2.imshow("im",im2)
+    cv2.waitKey(0)
+    #plt.imshow(im2)
