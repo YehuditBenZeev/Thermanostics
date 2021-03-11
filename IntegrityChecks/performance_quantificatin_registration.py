@@ -1,10 +1,14 @@
-#from alignment import get_point
 from __future__ import print_function
 from matplotlib import pylab as plt
 from registration import alignment
 import numpy as np
 from IntegrityChecks import registration_data as data
-
+from registration import matcher
+from registration import akaze
+from registration import orb
+from registration import sift_cv
+from registration import good_features_orb
+from registration import surf_cv
 
 def quantification():
     # image_list = glob.glob(os.path.join("../test_images", '*.bmp'))
@@ -26,7 +30,7 @@ def quantification():
         ref_image_link = "../images/514 RF.bmp"
         ref_image_points = data.image_ref['RF_514']
 
-        points = alignment.get_points(ref_image_link, image_path, ref_image_points)
+        points = alignment.get_points(ref_image_link, image_path, ref_image_points, akaze.get_matching_points_harris, matcher.matcher_BFMatcher)
 
         bool_array = list(map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 10 else False, zip(points[0], real_points[0])))
         ture_in_arr = np.sum(bool_array)
@@ -50,7 +54,7 @@ def quantification():
             ref_image_link = "../images/514 LB.bmp"
             ref_image_points = data.image_ref['LB_514']
 
-        points = alignment.get_points(ref_image_link, image_path, ref_image_points)
+        points = alignment.get_points(ref_image_link, image_path, ref_image_points, akaze.get_matching_points_harris, matcher.matcher_BFMatcher)
 
         bool_array = list(map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 15 else False, zip(points[0], real_points[0])))
         ture_in_arr = np.sum(bool_array)
@@ -62,7 +66,7 @@ def quantification():
     plt.show(block=True)
     with open("registration.txt", "a") as out_file:
 
-        out_file.write("try good features orb:\n\tregistration test 514 image result.\n")
+        out_file.write("akaze - harris - matcher matcher_BFMatcher:\n\tregistration test 514 image result.\n")
         for item in dict_counter_514:
             out_file.write("\t\t" + item + ": " + str(dict_counter_514[item]) + "\n")
         percent_514 = (dict_counter_514['true'] / (dict_counter_514['true'] + dict_counter_514['false']))*100

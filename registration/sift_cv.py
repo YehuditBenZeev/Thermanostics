@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
 from matplotlib import pylab as plt
+from registration.image_stitching import harris_corner_detection
 
 MAX_MATCHES = 500
 GOOD_MATCH_PERCENT = 0.15
@@ -45,4 +46,4 @@ if __name__ == "__main__":
     im = cv.imread(image_link, cv.IMREAD_COLOR)
     h = get_matching_points(im_reference, im)
 
-print(cv.__version__)
+    print(cv.__version__)

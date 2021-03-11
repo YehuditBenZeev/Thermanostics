@@ -47,7 +47,7 @@ def find_points(points, homography):
     return transformed
 
 
-def get_points(ref_image_link, image_link, ref_image_points):
+def get_points(ref_image_link, image_link, ref_image_points, matching_points, matcher):
 
     # print("Reading reference image : ", ref_image_link)
     im_reference = cv.imread(ref_image_link, cv.IMREAD_COLOR)
@@ -55,30 +55,18 @@ def get_points(ref_image_link, image_link, ref_image_points):
     # print("Reading image to align : ", image_link)
     im = cv.imread(image_link, cv.IMREAD_COLOR)
 
-    # print("Aligning images ...")
-    # Registered image will be resotred in imReg.
-    # The estimated homography will be stored in h.
-
-    points1, points2 = orb.get_matching_points(im_reference, im)
-    # imReg, homography = orb.get_homography_harris(ref_image_link, image_link)
+    # points1, points2 = matching_points(im_reference, im, matcher)
+    points1, points2 = matching_points(ref_image_link, image_link, matcher)
 
     # Find homography
     homography, mask = cv.findHomography(points1, points2, cv.RANSAC)
 
     transformed_points = find_points(ref_image_points, homography)
-    # # Write aligned image to disk.
-    # outFilename = "aligned.jpg"
-    # print("Saving aligned image : ", outFilename)
-    # cv.imwrite(outFilename, imReg)
 
-    # Print estimated homography
-    # print("Estimated homography : \n", homography)
-    print(transformed_points)
     return transformed_points
 
 
 def sow_points_on_image(fig_num, image, image_path, points):
-    # print(points)
     plt.figure(fig_num).clf()
     plt.title(image_path)
     plt.imshow(image)
