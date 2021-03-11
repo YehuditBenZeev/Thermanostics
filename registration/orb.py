@@ -1,7 +1,7 @@
 from __future__ import print_function
 import cv2 as cv
 import numpy as np
-from registration.image_stitching import harris_corner_detection
+from Thermanostics.registration.image_stitching import harris_corner_detection
 from matplotlib import pylab as plt
 
 MAX_MATCHES = 500
@@ -55,6 +55,7 @@ def get_matching_points_good_features(im1, im2):
     points2 = cv.goodFeaturesToTrack(gray2, 1000, 0.01, 10)
     kps2 = [cv.KeyPoint(x=f[0][0], y=f[0][1], _size=20) for f in points2]
     kps2, des2 = orb.compute(im2, kps2)
+    print(type(des1), "\n", des1)
 
     # create BFMatcher object
     bf = cv.BFMatcher(cv.NORM_HAMMING, crossCheck=True)

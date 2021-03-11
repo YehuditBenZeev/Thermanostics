@@ -4,11 +4,10 @@ import numpy as np
 from matplotlib import pylab as plt
 import os
 import glob
-from registration import akaze
-from registration import orb
-from registration import sift_cv
-from registration import good_features_orb
-from registration import surf_cv
+from Thermanostics.registration import orb
+from  Thermanostics.registration import sift_cv
+from Thermanostics.registration import akaze
+
 
 MAX_MATCHES = 1000
 GOOD_MATCH_PERCENT = 0.2
@@ -59,12 +58,16 @@ def get_points(ref_image_link, image_link, ref_image_points):
     # Registered image will be resotred in imReg.
     # The estimated homography will be stored in h.
 
-    points1, points2 = orb.get_matching_points(im_reference, im)
-    # imReg, homography = orb.get_homography_harris(ref_image_link, image_link)
+    #points1, points2 = sift_cv.get_matching_points(im_reference, im)
+    #points1, points2 = sift_cv.get_matching_points_good_features(im_reference, im)
+
+    points1,points2 = sift_cv.get_matching_points_harris(ref_image_link, image_link)
 
     # Find homography
     homography, mask = cv.findHomography(points1, points2, cv.RANSAC)
 
+    print(homography,"hhhhh")
+    print(type(homography),"__________")
     transformed_points = find_points(ref_image_points, homography)
     # # Write aligned image to disk.
     # outFilename = "aligned.jpg"
@@ -119,11 +122,11 @@ if __name__ == '__main__':
     # print("3: \n", po[0, :, 1])
     # run_test()
     x=get_points(refFilename, Filename, np.float64([[[470, 276], [452, 146], [386, 90], [320, 114], [280, 134], [230, 130], [216, 230], [262, 310], [342, 316]]]))
-    print("______________________")
-    print(x)
-    for i in x[0]:
-        print(i,"i")
-        cv.circle(im2,(int(i[1]),int(i[0])), 2, (255,0,0), 1)
-    cv.imshow("im",im2)
-    cv.waitKey(0)
-    #plt.imshow(im2)
+    # print("______________________")
+    # print(x)
+    # for i in x[0]:
+    #
+    #     cv.circle(im2,(int(i[1]),int(i[0])), 2, (255,0,0), 1)
+    # cv.imshow("im",im2)
+    # cv.waitKey(0)
+    # #plt.imshow(im2)
