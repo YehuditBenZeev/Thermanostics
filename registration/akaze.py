@@ -42,8 +42,7 @@ def get_matching_points_good_features(im1, im2, matcher):
     gray1 = cv.cvtColor(im1, cv.COLOR_BGR2GRAY)
     corners = cv.goodFeaturesToTrack(gray1, 1000, 0.01, 10)
     kps1 = [cv.KeyPoint(x=f[0][0], y=f[0][1], _size=20) for f in corners]
-    # print(len(kps1))
-    # print(kps1[0].class_id)
+
     for point in kps1:
         point.class_id = 0
     kps1, des1 = akaze.compute(im1, kps1)
@@ -95,9 +94,5 @@ def get_matching_points_harris(link1, link2, matcher):
     for i, match in enumerate(matches):
         points1[i, :] = kps1[match.queryIdx].pt
         points2[i, :] = kps2[match.trainIdx].pt
-
-    # Draw first 10 matches.
-    # img3 = cv.drawMatches(im1, kps1, im2, kps2, matches, None, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-    # plt.imshow(img3), plt.show()
 
     return points1, points2
