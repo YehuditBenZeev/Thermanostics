@@ -55,8 +55,8 @@ def get_points(ref_image_link, image_link, ref_image_points, matching_points, ma
     # print("Reading image to align : ", image_link)
     im = cv.imread(image_link, cv.IMREAD_COLOR)
 
-    # points1, points2 = matching_points(im_reference, im, matcher)
-    points1, points2 = matching_points(ref_image_link, image_link, matcher)
+    points1, points2 = matching_points(im_reference, im, matcher)
+    # points1, points2 = matching_points(ref_image_link, image_link, matcher)
 
     # Find homography
     homography, mask = cv.findHomography(points1, points2, cv.RANSAC)
