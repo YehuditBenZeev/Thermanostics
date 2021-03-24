@@ -1,15 +1,7 @@
 import numpy as np
 import cv2
-import os.path
-import sys
-import argparse
 import csv
-
-from openpyxl import load_workbook
-import pandas as pd
 from Thermanostics.imageProcessing import ConvertGrayScale as Ip
-
-
 
 class FindingHotspotsInPicture:
     def __init__(self, processed_image):
@@ -18,7 +10,6 @@ class FindingHotspotsInPicture:
         self.pointList = []
         self.h, self.w = self.image.shape
         self.img = np.array(self.image)
-        Ip.show_pic(self.image, "black")
 
     def find_max_point_in_area(self, p1, p2, p3, p4, value):
         jo = 0
@@ -42,7 +33,6 @@ class FindingHotspotsInPicture:
                         io = i
                         jo = j
             return temp, io, jo
-
     # #scan all picture funk get point and define to area
     def scan_image(self, i, j, k, value):
         l1 = i - k
@@ -55,7 +45,6 @@ class FindingHotspotsInPicture:
             return 0, 0, 0
         else:
             return valuePoint, io, ji
-
     def pass_on_image(self, size):
         flag1 = False
         flag2 = False
@@ -85,33 +74,14 @@ class FindingHotspotsInPicture:
                     flag2 = False
                     flag3 = False
                     flag4 = False
-        # print array that hold max point from stage1
-        print(self.pointList, "pointList")
         self.pointList = list(dict.fromkeys(self.pointList))
-        print(self.pointList)
         for i in self.pointList:
             cv2.circle(self.img, i, 4, (0, 0,250), 2)
         Ip.show_pic(self.img, "p")
 # ____________________________________________________________________________________________
     def write_in_file(self):
-        # writer = pd.ExcelWriter('hotspots.xlsx', engine='openpyxl')
-        # wb = writer.book
-        # df = pd.DataFrame({'': [],
-        #                    'Area': [],
-        #                    'Mean': [],
-        #                    'Min': [],
-        #                    'Max': [],
-        #                    'X': [],
-        #                    'Y': [],
-        #                    'IntDen': [],
-        #                    'RawIntDen': []})
-        #
-        # df.to_excel(writer, index=False)
-        # wb.save('hotspots.xlsx')
-
         # field names
         fields = ['X', 'Y']
-
         # data rows of csv file
         rows = []
         for point in self.pointList:
@@ -130,15 +100,3 @@ class FindingHotspotsInPicture:
             # writing the data rows
             csvwriter.writerows(rows)
         return filename
-
-
-
-
-if __name__ == '__main__':
-    im = cv2.imread("../im1.jpg", cv2.IMREAD_COLOR)
-    gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-
-
-    a=FindingHotspotsInPicture(gray)
-    a.pass_on_image(10)
-    a.write_in_file()
