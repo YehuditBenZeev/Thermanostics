@@ -1,9 +1,10 @@
 import csv
+import cv2
 import pandas as pd
 import xlrd
-
-
+import numpy as np
 MAX_DIST = 5
+from Thermanostics.imageProcessing import FindingHotspotsInPicture as find
 
 
 class ObjectTest:
@@ -73,9 +74,21 @@ class Tests:
             if not point.boolean:
                 false_negative += 1
         print("true_positive,true_negative,false_positive,false_negative", true_positive, true_negative, false_positive, false_negative)
-
-
+        accuracy=(true_positive+true_negative)/(true_positive+true_negative+false_negative+false_negative)
+        precision=true_positive/(true_positive+false_positive) if (true_positive+false_positive) else "infinity"
+        tpr=true_positive/(true_positive+false_negative) if (true_positive+false_negative) else "infinity"
+        fpr=false_positive/(false_positive+true_negative) if (false_positive+true_negative) else "infinity"
+        print("accuracy:",accuracy,"\n","precision",precision)
+        print("tpr",tpr)
+        print("fpr",fpr)
 if __name__ == "__main__":
-    a = Tests("algoritm_505_LB.csv", "alona_505_LB.csv")
+    im = cv2.imread("../im1.jpg", cv2.IMREAD_COLOR)
+    gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
+
+    find_hotspot = find.FindingHotspotsInPicture(gray)
+    find_hotspot.pass_on_image(10)
+    algoritm_file=find_hotspot.write_in_file()
+    a = Tests(algoritm_file, "imageJ_point.csv")
     a.check_detected_points()
     a.check_success()
+

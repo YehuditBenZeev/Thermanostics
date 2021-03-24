@@ -17,9 +17,7 @@ def harris_corner_detection(image_link):
 
     # Threshold for an optimal value, it may vary depending on the image.
     img[dst > 0.01 * dst.max()] = [0, 0, 255]
-    # cv.imshow('dst', img)
-    # if cv.waitKey(0) & 0xff == 27:
-    #     cv.destroyAllWindows()
+
 
     h, w, c = img.shape
     points = []
@@ -28,12 +26,7 @@ def harris_corner_detection(image_link):
             if img[i][j][0] == [0] and img[i][j][1] == [0] and img[i][j][2] == [255]:
                 points.append([i, j])
     final = [points, ]
-    # points = [x for i in img if img[x] == [0, 0, 255]]
-    # print("points:")
-    # print(len(points))
-    # print(points)
     return final
-
 
 def image_stitching():
 

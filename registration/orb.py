@@ -90,11 +90,9 @@ def get_matching_points_harris(link1, link2):
         temp.append(cv.KeyPoint(x=f[0], y=f[1], _size=0.5))
     kps1 = [cv.KeyPoint(x=f[0], y=f[1], _size=0.5) for f in points1[0]]
     kps1, des1 = orb.compute(im1, kps1)
-
     kps2 = [cv.KeyPoint(x=f[0], y=f[1], _size=0.5) for f in points2[0]]
     kps2, des2 = orb.compute(im2, kps2)
     bf = cv.BFMatcher(cv.NORM_HAMMING, crossCheck=True)
-
     # Match descriptors.
     matches = bf.match(des1, des2)
     # Sort them in the order of their distance.
@@ -104,9 +102,11 @@ def get_matching_points_harris(link1, link2):
     points1 = np.zeros((len(matches), 2), dtype=np.float32)
     points2 = np.zeros((len(matches), 2), dtype=np.float32)
 
+
     for i, match in enumerate(matches):
         points1[i, :] = kps1[match.queryIdx].pt
         points2[i, :] = kps2[match.trainIdx].pt
+
 
     # Draw first 10 matches.
     # img3 = cv.drawMatches(im1, kps1, im2, kps2, matches, None, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
@@ -123,4 +123,4 @@ if __name__ == "__main__":
     # print(im_reference.shape)
     im = cv.imread(image_link, cv.IMREAD_COLOR)
     # im1Reg, h = get_homography_good_features(im_reference, im)
-    im1Reg, h = get_homography_harris(ref_image_link, image_link)
+   # im1Reg, h = get_homography_harris(ref_image_link, image_link)

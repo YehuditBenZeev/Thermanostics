@@ -5,7 +5,7 @@ from matplotlib import pylab as plt
 import os
 import glob
 from Thermanostics.registration import orb
-from  Thermanostics.registration import sift_cv
+from  Thermanostics.registration import sift
 from Thermanostics.registration import akaze
 
 
@@ -60,14 +60,11 @@ def get_points(ref_image_link, image_link, ref_image_points):
 
     #points1, points2 = sift_cv.get_matching_points(im_reference, im)
     #points1, points2 = sift_cv.get_matching_points_good_features(im_reference, im)
-
-    points1,points2 = sift_cv.get_matching_points_harris(ref_image_link, image_link)
+    points1,points2 = sift.get_matching_points_harris(ref_image_link, image_link)
 
     # Find homography
-    homography, mask = cv.findHomography(points1, points2, cv.RANSAC)
 
-    print(homography,"hhhhh")
-    print(type(homography),"__________")
+    homography, mask = cv.findHomography(points1, points2, cv.RANSAC)
     transformed_points = find_points(ref_image_points, homography)
     # # Write aligned image to disk.
     # outFilename = "aligned.jpg"
@@ -107,7 +104,7 @@ def run_test():
 if __name__ == '__main__':
     # Read reference image
     refFilename = "../images/514 RF.bmp"
-    Filename = "../images/509 RF.bmp"
+    Filename = "../images/511 RF.bmp"
     # print("Reading reference image : ", refFilename)
     im1 = cv.imread(Filename, cv.IMREAD_COLOR)
     im2= np.array(im1)
