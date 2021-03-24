@@ -1,8 +1,8 @@
 from __future__ import print_function
 import cv2 as cv
 import numpy as np
-from registration.image_stitching import harris_corner_detection
-
+from registration.harris import harris_corner_detection
+from matplotlib import pylab as plt
 
 MAX_MATCHES = 500
 GOOD_MATCH_PERCENT = 0.15
@@ -64,25 +64,20 @@ def get_matching_points_good_features(im1, im2, matcher):
     return points1, points2
 
 
-def get_matching_points_harris(link1, link2, matcher):
-    im1 = cv.imread(link1, cv.IMREAD_COLOR)
-    im2 = cv.imread(link2, cv.IMREAD_COLOR)
+def get_matching_points_harris(im1, im2, matcher):
+    # im1 = cv.imread(link1, cv.IMREAD_COLOR)
+    # im2 = cv.imread(link2, cv.IMREAD_COLOR)
 
-    points1 = harris_corner_detection(link1)
-    points2 = harris_corner_detection(link2)
+    points1 = harris_corner_detection(im1)
+    points2 = harris_corner_detection(im2)
 
     orb = cv.ORB_create()
-    temp = []
-    counter = 0
-    for f in points2[0]:
-        counter += 1
-        temp.append(cv.KeyPoint(x=f[0], y=f[1], _size=0.5))
+
     kps1 = [cv.KeyPoint(x=f[0], y=f[1], _size=0.5) for f in points1[0]]
     kps1, des1 = orb.compute(im1, kps1)
 
     kps2 = [cv.KeyPoint(x=f[0], y=f[1], _size=0.5) for f in points2[0]]
     kps2, des2 = orb.compute(im2, kps2)
-    bf = cv.BFMatcher(cv.NORM_HAMMING, crossCheck=True)
 
     matches = matcher(des1, des2)
     # Extract location of good matches
@@ -93,5 +88,19 @@ def get_matching_points_harris(link1, link2, matcher):
         points1[i, :] = kps1[match.queryIdx].pt
         points2[i, :] = kps2[match.trainIdx].pt
 
+    # Draw first 10 matches.
+    # img3 = cv.drawMatches(im1, kps1, im2, kps2, matches, None, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+    # plt.imshow(img3), plt.show()
+
     return points1, points2
 
+
+if __name__ == "__main__":
+    print(cv.__version__)
+    ref_image_link = "../images/514 RF.bmp"
+    image_link = "../images/509 RF.bmp"
+    im_reference = cv.imread(ref_image_link, cv.IMREAD_COLOR)
+    # print(im_reference.shape)
+    im = cv.imread(image_link, cv.IMREAD_COLOR)
+    # im1Reg, h = get_homography_good_features(im_reference, im)
+    im1Reg, h = get_homography_harris(ref_image_link, image_link)

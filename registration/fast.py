@@ -1,7 +1,7 @@
 from __future__ import print_function
 import cv2 as cv
 import numpy as np
-from registration.image_stitching import harris_corner_detection
+from registration.harris import harris_corner_detection
 
 
 MAX_MATCHES = 500

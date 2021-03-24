@@ -4,19 +4,12 @@ from registration import alignment
 import numpy as np
 from IntegrityChecks import registration_data as data
 from registration import matcher
+from customizedExceptions.customized_exceptions import PointLengthError, HomographyError
 from registration import akaze
-from registration import orb
-from registration import sift_cv
-from registration import good_features_orb
-from registration import surf_cv
-from registration import fast
+
 
 def quantification():
-    # image_list = glob.glob(os.path.join("../test_images", '*.bmp'))
-    # for i, image_path in enumerate(image_list):
     i = 0
-    # true_counter = 0
-    # false_counter = 0
     dict_counter = {
         'true': 0,
         'false': 0
@@ -30,8 +23,14 @@ def quantification():
     for image_path, real_points in data.images_514.items():
         ref_image_link = "../images/514 RF.bmp"
         ref_image_points = data.image_ref['RF_514']
-
-        points = alignment.get_points(ref_image_link, image_path, ref_image_points, fast.get_matching_points, matcher.matcher_DescriptorMatcher)
+        try:
+            points = alignment.get_points(ref_image_link, image_path, ref_image_points, akaze.get_matching_points_harris, matcher.matcher_DescriptorMatcher)
+        except PointLengthError as e:
+            print(image_path)
+            continue
+        except HomographyError as e:
+            print(image_path)
+            continue
 
         bool_array = list(map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 10 else False, zip(points[0], real_points[0])))
         ture_in_arr = np.sum(bool_array)
@@ -55,7 +54,14 @@ def quantification():
             ref_image_link = "../images/514 LB.bmp"
             ref_image_points = data.image_ref['LB_514']
 
-        points = alignment.get_points(ref_image_link, image_path, ref_image_points, fast.get_matching_points, matcher.matcher_DescriptorMatcher)
+        try:
+            points = alignment.get_points(ref_image_link, image_path, ref_image_points, akaze.get_matching_points_harris, matcher.matcher_DescriptorMatcher)
+        except PointLengthError as e:
+            print(image_path)
+            continue
+        except HomographyError as e:
+            print(image_path)
+            continue
 
         bool_array = list(map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 15 else False, zip(points[0], real_points[0])))
         ture_in_arr = np.sum(bool_array)
@@ -67,7 +73,7 @@ def quantification():
     plt.show(block=True)
     with open("registration.txt", "a") as out_file:
 
-        out_file.write("fast - matcher matcher_DescriptorMatcher:\n\tregistration test 514 image result.\n")
+        out_file.write("akaze - harris - matcher matcher_DescriptorMatcher:\n\tregistration test 514 image result.\n")
         for item in dict_counter_514:
             out_file.write("\t\t" + item + ": " + str(dict_counter_514[item]) + "\n")
         percent_514 = (dict_counter_514['true'] / (dict_counter_514['true'] + dict_counter_514['false']))*100

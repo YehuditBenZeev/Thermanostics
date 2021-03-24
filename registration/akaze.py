@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-from registration.image_stitching import harris_corner_detection
+from registration.harris import harris_corner_detection
 
 MAX_MATCHES = 1000
 GOOD_MATCH_PERCENT = 0.2
@@ -66,24 +66,24 @@ def get_matching_points_good_features(im1, im2, matcher):
     return points1, points2
 
 
-def get_matching_points_harris(link1, link2, matcher):
-    im1 = cv.imread(link1, cv.IMREAD_COLOR)
-    im2 = cv.imread(link2, cv.IMREAD_COLOR)
+def get_matching_points_harris(im1, im2, matcher):
+    # im1 = cv.imread(link1, cv.IMREAD_COLOR)
+    # im2 = cv.imread(link2, cv.IMREAD_COLOR)
 
-    points1 = harris_corner_detection(link1)
-    points2 = harris_corner_detection(link2)
+    points1 = harris_corner_detection(im1)
+    points2 = harris_corner_detection(im2)
 
-    orb = cv.ORB_create()
-    temp = []
-    counter = 0
-    for f in points2[0]:
-        counter += 1
-        temp.append(cv.KeyPoint(x=f[0], y=f[1], _size=0.5))
+    akaze = cv.AKAZE_create()
+
     kps1 = [cv.KeyPoint(x=f[0], y=f[1], _size=0.5) for f in points1[0]]
-    kps1, des1 = orb.compute(im1, kps1)
+    for point in kps1:
+        point.class_id = 0
+    kps1, des1 = akaze.compute(im1, kps1)
 
     kps2 = [cv.KeyPoint(x=f[0], y=f[1], _size=0.5) for f in points2[0]]
-    kps2, des2 = orb.compute(im2, kps2)
+    for point in kps2:
+        point.class_id = 0
+    kps2, des2 = akaze.compute(im2, kps2)
 
     matches = matcher(des1, des2)
 

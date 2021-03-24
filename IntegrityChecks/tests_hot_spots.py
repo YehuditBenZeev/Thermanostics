@@ -37,7 +37,7 @@ def distance(point1, point2):
     return point_distance
 
 
-class Tests:
+class TestsHotSpots:
     def __init__(self, expected_points, detected_points):
         self.expected_points = read_from_file(expected_points)  # algoritm
         self.detected_points = read_from_file(detected_points)  # alona
@@ -76,6 +76,6 @@ class Tests:
 
 
 if __name__ == "__main__":
-    a = Tests("algoritm_505_LB.csv", "alona_505_LB.csv")
+    a = TestsHotSpots("algoritm_505_LB.csv", "alona_505_LB.csv")
     a.check_detected_points()
     a.check_success()

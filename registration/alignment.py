@@ -4,11 +4,7 @@ import numpy as np
 from matplotlib import pylab as plt
 import os
 import glob
-from registration import akaze
-from registration import orb
-from registration import sift_cv
-from registration import good_features_orb
-from registration import surf_cv
+from customizedExceptions.customized_exceptions import PointLengthError, HomographyError
 
 MAX_MATCHES = 1000
 GOOD_MATCH_PERCENT = 0.2
@@ -42,7 +38,8 @@ def find_points(points, homography):
         # print(transformed)
     except Exception as e:
         print(e)
-
+        print(points)
+        print(homography)
         print("fail")
     return transformed
 
@@ -55,18 +52,24 @@ def get_points(ref_image_link, image_link, ref_image_points, matching_points, ma
     # print("Reading image to align : ", image_link)
     im = cv.imread(image_link, cv.IMREAD_COLOR)
 
-    points1, points2 = matching_points(im_reference, im, matcher)
-    # points1, points2 = matching_points(ref_image_link, image_link, matcher)
+    # points1, points2 = matching_points(im_reference, im, matcher)
+    points1, points2 = matching_points(ref_image_link, image_link, matcher)
+
+    if len(points1) < 3 or len(points2) < 3:
+        raise PointLengthError("not enough points to find homography")
 
     # Find homography
     homography, mask = cv.findHomography(points1, points2, cv.RANSAC)
+
+    if homography == None:
+        raise HomographyError()
 
     transformed_points = find_points(ref_image_points, homography)
 
     return transformed_points
 
 
-def sow_points_on_image(fig_num, image, image_path, points):
+def show_points_on_image(fig_num, image, image_path, points):
     plt.figure(fig_num).clf()
     plt.title(image_path)
     plt.imshow(image)
@@ -79,13 +82,13 @@ def run_test():
     for i, image_path in enumerate(image_list):
         image = plt.imread(image_path)
         transformed = get_points(i, image_path)
-        sow_points_on_image(i, image, image_path, transformed)
+        show_points_on_image(i, image, image_path, transformed)
     plt.show(block=True)
 
     # image_path = '../514 images/514 RF flip.bmp'
     # image = plt.imread(image_path)
     # transformed = main(0, image_path)
-    # sow_points_on_image(0, image, image_path, transformed)
+    # show_points_on_image(0, image, image_path, transformed)
     # plt.show(block=True)
 
 
@@ -115,3 +118,6 @@ if __name__ == '__main__':
     cv.imshow("im",im2)
     cv.waitKey(0)
     #plt.imshow(im2)
+
+
+
