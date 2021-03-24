@@ -38,8 +38,7 @@ def find_points(points, homography):
         # print(transformed)
     except Exception as e:
         print(e)
-        print(points)
-        print(homography)
+
         print("fail")
     return transformed
 
@@ -95,7 +94,7 @@ def run_test():
 if __name__ == '__main__':
     # Read reference image
     refFilename = "../images/514 RF.bmp"
-    Filename = "../images/509 RF.bmp"
+    Filename = "../images/511 RF.bmp"
     # print("Reading reference image : ", refFilename)
     im1 = cv.imread(Filename, cv.IMREAD_COLOR)
     im2= np.array(im1)
@@ -110,14 +109,11 @@ if __name__ == '__main__':
     # print("3: \n", po[0, :, 1])
     # run_test()
     x=get_points(refFilename, Filename, np.float64([[[470, 276], [452, 146], [386, 90], [320, 114], [280, 134], [230, 130], [216, 230], [262, 310], [342, 316]]]))
-    print("______________________")
-    print(x)
-    for i in x[0]:
-        print(i,"i")
-        cv.circle(im2,(int(i[1]),int(i[0])), 2, (255,0,0), 1)
-    cv.imshow("im",im2)
-    cv.waitKey(0)
-    #plt.imshow(im2)
-
-
-
+    # print("______________________")
+    # print(x)
+    # for i in x[0]:
+    #
+    #     cv.circle(im2,(int(i[1]),int(i[0])), 2, (255,0,0), 1)
+    # cv.imshow("im",im2)
+    # cv.waitKey(0)
+    # #plt.imshow(im2)

@@ -72,7 +72,11 @@ def get_matching_points_harris(im1, im2, matcher):
     points2 = harris_corner_detection(im2)
 
     orb = cv.ORB_create()
-
+    temp = []
+    counter = 0
+    for f in points2[0]:
+        counter += 1
+        temp.append(cv.KeyPoint(x=f[0], y=f[1], _size=0.5))
     kps1 = [cv.KeyPoint(x=f[0], y=f[1], _size=0.5) for f in points1[0]]
     kps1, des1 = orb.compute(im1, kps1)
 
@@ -103,4 +107,4 @@ if __name__ == "__main__":
     # print(im_reference.shape)
     im = cv.imread(image_link, cv.IMREAD_COLOR)
     # im1Reg, h = get_homography_good_features(im_reference, im)
-    im1Reg, h = get_homography_harris(ref_image_link, image_link)
+   # im1Reg, h = get_homography_harris(ref_image_link, image_link)

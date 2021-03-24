@@ -1,11 +1,8 @@
 import math
-
 import cv2
 import numpy as np
 import pandas as pd
 import csv
-
-
 
 
 def show_pic(image, name):

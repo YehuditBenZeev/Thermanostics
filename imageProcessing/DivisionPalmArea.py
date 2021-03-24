@@ -64,9 +64,7 @@ class DivisionPalmArea:
         self.TopRight = self.palmIn.finger3.top_2
         self.bottomLeft = self.palmIn.finger3.bottom_1
         self.bottomRight = self.palmIn.finger4.bottom_1
-        # i = self.palmIn.finger4.bottom_1[0]
-        # j = self.palmIn.finger4.bottom_1[1]
-        # cv2.circle(self.img, (i, j), 4, (255, 128, 0), 2)
+
 
         pts = np.array([[self.TopLeFt[0], 310], [self.TopLeFt[0], 360], self.bottomRight, self.bottomLeft], np.int32)
         pts = pts.reshape((-1, 1, 2))

@@ -28,24 +28,20 @@ class SortHotPointInArea:
 
     def area0(self):
         self.divPalm.find_area_0()
-        print("area 0")
 
     def area1(self):
         self.divPalm.find_finger_1()
-        print("area1")
-        for p in self.findPoint.pointList:
+        for p in self.findPoint.pointList:  # for each hot spot create a polygon
             polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomRight, (435, 109)])
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.ListContours:
                     self.ArrayArea1.append(p)
                     self.findPoint.pointList.remove(p)
-                    # print(polygon.contains(point), "area1___________")
-        Ip.show_pic(self.divPalm.img,"p")
+        Ip.show_pic(self.divPalm.img, "p")
 
     def arae2(self):
         self.divPalm.find_finger_2()
-        print("area2")
         for p in self.findPoint.pointList:
             polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopLeFt, self.divPalm.bottomRight, self.divPalm.bottomLeft])
             point = Point(p)
@@ -53,12 +49,10 @@ class SortHotPointInArea:
                 if p not in self.ListContours:
                     self.ArrayArea1.append(p)
                     self.findPoint.pointList.remove(p)
-                    # print(polygon.contains(point), "area1___________")
         Ip.show_pic(self.divPalm.img, "p")
 
     def Arae3(self):
         self.divPalm.find_finger_3()
-        print("area3")
         for p in self.findPoint.pointList:
             polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomRight, self.divPalm.bottomLeft])
             point = Point(p)
@@ -66,12 +60,10 @@ class SortHotPointInArea:
                 if p not in self.ListContours:
                     self.ArrayArea1.append(p)
                     self.findPoint.pointList.remove(p)
-                    # print(polygon.contains(point), "area1___________")
         Ip.show_pic(self.divPalm.img, "p")
 
     def arae4(self):
         self.divPalm.find_finger_4()
-        print("area4")
         for p in self.findPoint.pointList:
             polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomRight, self.divPalm.bottomLeft])
             point = Point(p)
@@ -79,12 +71,10 @@ class SortHotPointInArea:
                 if p not in self.ListContours:
                     self.ArrayArea1.append(p)
                     self.findPoint.pointList.remove(p)
-                    # print(polygon.contains(point), "area1___________")
         Ip.show_pic(self.divPalm.img, "p")
 
     def arae5(self):
         self.divPalm.find_finger_5()
-        print("area5")
         for p in self.findPoint.pointList:
             polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomLeft, self.divPalm.bottomRight])
             point = Point(p)
@@ -92,5 +82,4 @@ class SortHotPointInArea:
                 if p not in self.ListContours:
                     self.ArrayArea1.append(p)
                     self.findPoint.pointList.remove(p)
-                    # print(polygon.contains(point), "area1___________")
         Ip.show_pic(self.divPalm.img, "p")
