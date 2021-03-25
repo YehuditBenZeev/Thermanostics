@@ -51,16 +51,16 @@ def get_points(ref_image_link, image_link, ref_image_points, matching_points, ma
     # print("Reading image to align : ", image_link)
     im = cv.imread(image_link, cv.IMREAD_COLOR)
 
-    # points1, points2 = matching_points(im_reference, im, matcher)
-    points1, points2 = matching_points(ref_image_link, image_link, matcher)
+    points1, points2 = matching_points(im_reference, im, matcher)
+    # points1, points2 = matching_points(ref_image_link, image_link, matcher)
 
-    if len(points1) < 3 or len(points2) < 3:
+    if len(points1) < 4 or len(points2) < 4:
         raise PointLengthError("not enough points to find homography")
 
     # Find homography
     homography, mask = cv.findHomography(points1, points2, cv.RANSAC)
 
-    if homography == None:
+    if homography is None:
         raise HomographyError()
 
     transformed_points = find_points(ref_image_points, homography)
@@ -92,28 +92,5 @@ def run_test():
 
 
 if __name__ == '__main__':
-    # Read reference image
-    refFilename = "../images/514 RF.bmp"
-    Filename = "../images/511 RF.bmp"
-    # print("Reading reference image : ", refFilename)
-    im1 = cv.imread(Filename, cv.IMREAD_COLOR)
-    im2= np.array(im1)
+    print(type(None))
 
-
-    # Read image to be aligned
-    #main("../514 images/514 RF.bmp")
-    # try_()
-    # po = np.float64([[[215.,  36.], [44., 153.], [19., 225.], [55., 270.], [105., 303.]]])
-    # print("1: \n", po[0])
-    # print("2: \n", po[0, :, 0])
-    # print("3: \n", po[0, :, 1])
-    # run_test()
-    x=get_points(refFilename, Filename, np.float64([[[470, 276], [452, 146], [386, 90], [320, 114], [280, 134], [230, 130], [216, 230], [262, 310], [342, 316]]]))
-    # print("______________________")
-    # print(x)
-    # for i in x[0]:
-    #
-    #     cv.circle(im2,(int(i[1]),int(i[0])), 2, (255,0,0), 1)
-    # cv.imshow("im",im2)
-    # cv.waitKey(0)
-    # #plt.imshow(im2)

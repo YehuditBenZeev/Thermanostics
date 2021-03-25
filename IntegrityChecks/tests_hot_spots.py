@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
-import xlrd
+import cv2 as cv
+from imageProcessing import FindingHotspotsInPicture as find
 
 
 MAX_DIST = 5
@@ -74,8 +75,24 @@ class TestsHotSpots:
                 false_negative += 1
         print("true_positive,true_negative,false_positive,false_negative", true_positive, true_negative, false_positive, false_negative)
 
+        print("true_positive,true_negative,false_positive,false_negative", true_positive, true_negative, false_positive,
+              false_negative)
+        accuracy = (true_positive + true_negative) / (true_positive + true_negative + false_negative + false_negative)
+        precision = true_positive / (true_positive + false_positive) if (true_positive + false_positive) else "infinity"
+        tpr = true_positive / (true_positive + false_negative) if (true_positive + false_negative) else "infinity"
+        fpr = false_positive / (false_positive + true_negative) if (false_positive + true_negative) else "infinity"
+        print("accuracy:", accuracy, "\n", "precision", precision)
+        print("tpr", tpr)
+        print("fpr", fpr)
+
 
 if __name__ == "__main__":
     a = TestsHotSpots("algoritm_505_LB.csv", "alona_505_LB.csv")
     a.check_detected_points()
     a.check_success()
+    im = cv.imread("../im1.jpg", cv.IMREAD_COLOR)
+    gray = cv.cvtColor(im, cv.COLOR_BGR2GRAY)
+
+    find_hotspot = find.FindingHotspotsInPicture(gray)
+    find_hotspot.pass_on_image(10)
+    algoritm_file = find_hotspot.write_in_file()

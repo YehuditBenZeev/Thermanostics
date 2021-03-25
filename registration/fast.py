@@ -33,7 +33,7 @@ def get_matching_points(im1, im2, matcher):
     matches = matches[:numGoodMatches]
 
     # Draw top matches
-    imMatches = cv.drawMatches(im1, keypoints1, im2, keypoints2, matches, None)
+    imMatches = cv.drawMatches(im1, kps1, im2, kps2, matches, None)
     cv.imwrite("matches.jpg", imMatches)
 
     # Extract location of good matches
@@ -41,8 +41,8 @@ def get_matching_points(im1, im2, matcher):
     points2 = np.zeros((len(matches), 2), dtype=np.float32)
 
     for i, match in enumerate(matches):
-        points1[i, :] = keypoints1[match.queryIdx].pt
-        points2[i, :] = keypoints2[match.trainIdx].pt
+        points1[i, :] = kps1[match.queryIdx].pt
+        points2[i, :] = kps2[match.trainIdx].pt
 
     return points1, points2
 
