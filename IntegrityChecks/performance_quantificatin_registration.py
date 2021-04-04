@@ -29,11 +29,11 @@ def quantification():
         ref_image_link = "../images/514 RF.bmp"
         ref_image_points = data.image_ref['RF_514']
         try:
-            points = alignment.get_points(ref_image_link, image_path, ref_image_points, fast.get_matching_points, matcher.matcher_DescriptorMatcher)
+            points = alignment.get_points(ref_image_link, image_path, ref_image_points, sift.get_matching_points_harris, matcher.matcher_DescriptorMatcher)
         except (PointLengthError, HomographyError) as e:
+            print(i, ": ", e)
             dict_counter_514['fails'] += 1
             continue
-
 
         bool_array = list(map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 10 else False, zip(points[0], real_points[0])))
         ture_in_arr = np.sum(bool_array)
@@ -58,12 +58,13 @@ def quantification():
             ref_image_points = data.image_ref['LB_514']
 
         try:
-            points = alignment.get_points(ref_image_link, image_path, ref_image_points, fast.get_matching_points, matcher.matcher_DescriptorMatcher)
+            points = alignment.get_points(ref_image_link, image_path, ref_image_points, fast.get_matching_points_harris, matcher.matcher_DescriptorMatcher)
         except (PointLengthError, HomographyError) as e:
+            print(i, ": ", e)
             dict_counter['fails'] += 1
             continue
 
-        bool_array = list(map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 15 else False, zip(points[0], real_points[0])))
+        bool_array = list(map(lambda x: True if((x[0][0]-x[1][0])**2+(x[0][1]-x[1][1])**2)**0.5 < 10 else False, zip(points[0], real_points[0])))
         ture_in_arr = np.sum(bool_array)
 
         dict_counter['true'] += ture_in_arr
@@ -73,7 +74,7 @@ def quantification():
     plt.show(block=True)
     with open("registration.txt", "a") as out_file:
 
-        out_file.write("fast - matcher matcher_DescriptorMatcher:\n\tregistration test 514 image result.\n")
+        out_file.write("sift - harris - matcher matcher_DescriptorMatcher:\n\tregistration test 514 image result.\n")
         for item in dict_counter_514:
             out_file.write("\t\t" + item + ": " + str(dict_counter_514[item]) + "\n")
         percent_514 = (dict_counter_514['true'] / (dict_counter_514['true'] + dict_counter_514['false']))*100 if (dict_counter_514['true'] + dict_counter_514['false']) else 0
