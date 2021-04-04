@@ -62,6 +62,7 @@ def get_points(ref_image_link, image_link, ref_image_points):
     #points1, points2 = sift_cv.get_matching_points_good_features(im_reference, im)
     points1,points2 = sift.get_matching_points_harris(ref_image_link, image_link)
 
+
     # Find homography
 
     homography, mask = cv.findHomography(points1, points2, cv.RANSAC)

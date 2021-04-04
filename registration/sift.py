@@ -39,8 +39,8 @@ def get_matching_points(im1, im2):
 
     return points1, points2
 def get_matching_points_good_features(im1, im2):
+    
     sift = cv.SIFT_create()
-
     gray1 = cv.cvtColor(im1, cv.COLOR_BGR2GRAY)
     gray2 = cv.cvtColor(im2, cv.COLOR_BGR2GRAY)
 
@@ -52,7 +52,7 @@ def get_matching_points_good_features(im1, im2):
 
     points2 = cv.goodFeaturesToTrack(gray2, 1000, 0.01, 10)
     kps2 = [cv.KeyPoint(x=f[0][0], y=f[0][1], _size=20) for f in points2]
-    kps2, des2 = sift.compute(im2, kps2)#??????????????????????gray2
+    kps2, des2 = sift.compute(im2, kps2)
     udes2 = np.uint8(des2)
 
     matches =matcher.matcher_DescriptorMatcher(udes1,udes2)
@@ -68,7 +68,6 @@ def get_matching_points_good_features(im1, im2):
     return points1, points2
 
 def get_matching_points_harris(link1, link2):
-    print("-------------------------------")
     im1 = cv.imread(link1, cv.IMREAD_COLOR)
     im2 = cv.imread(link2, cv.IMREAD_COLOR)
     gray1 = cv.cvtColor(im1, cv.COLOR_BGR2GRAY)
@@ -78,22 +77,19 @@ def get_matching_points_harris(link1, link2):
     points2 = harris_corner_detection(link2)
     sift = cv.SIFT_create()
     print(points1)
+    print(points2)
     coun=0
     str=[]
     for p in points1[0]:
         coun+=1
         str.append(cv.KeyPoint(x=p[0],y=p[1],_size=20))
-    print(coun,"coooooooo")
-    print(str)
 
     kps1 = [cv.KeyPoint(x=f[0][0], y=f[0][1], _size=20) for f in points1]
-    print(kps1,"___________________")
     kps1, des1 = sift.compute(gray1, str)
-    print(des1,"ddddddddddddddddd")
     udes1 = np.uint8(des1)
 
     kps2 = [cv.KeyPoint(x=f[0][0], y=f[0][1], _size=20) for f in points2]
-    kps2, des2 = sift.compute(gray2, kps2)  # ??????????????????????gray2
+    kps2, des2 = sift.compute(gray2, kps2)
     udes2 = np.uint8(des2)
 
     bf = cv.BFMatcher(cv.NORM_HAMMING, crossCheck=True)
@@ -103,7 +99,6 @@ def get_matching_points_harris(link1, link2):
     matches = bf.match(udes1, udes2)
     # Sort them in the order of their distance.
     matches = sorted(matches, key=lambda x: x.distance)
-
     # Extract location of good matches
     points1 = np.zeros((len(matches), 2), dtype=np.float32)
     points2 = np.zeros((len(matches), 2), dtype=np.float32)
@@ -112,20 +107,5 @@ def get_matching_points_harris(link1, link2):
         print(len(matches))
         points1[i, :] = kps1[match.queryIdx].pt
         points2[i, :] = kps2[match.trainIdx].pt
+    return points1,points2
 
-    # # Draw first 10 matches.
-    # # img3 = cv.drawMatches(im1, kps1, im2, kps2, matches, None, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-    # # plt.imshow(img3), plt.show()
-    #
-    print("___",points1,"____")
-    print("___",points2,"___")
-    #return points1, points2
-
-    x=np.array([[2,6],[3,2],[2,6],[3,2]])
-    return x,x
-
-
-
-
-    #
-    #
