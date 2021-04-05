@@ -67,34 +67,20 @@ def get_matching_points_harris(im1, im2, matcher):
 
     points1 = harris_corner_detection(im1)
     points2 = harris_corner_detection(im2)
-
-    # points1 = harris_corner_detection(link1)
-    # points2 = harris_corner_detection(link2)
     sift = cv.SIFT_create()
-    print(points1)
-    coun = 0
-    str = []
-    for p in points1[0]:
-        coun += 1
-        str.append(cv.KeyPoint(x=p[0], y=p[1], _size=20))
-    # print(coun, "coooooooo")
-    # print(str)
 
     kps1 = [cv.KeyPoint(x=f[0][0], y=f[0][1], _size=20) for f in points1]
-    # print(kps1, "___________________")
-    kps1, des1 = sift.compute(gray1, str)
-
+    kps1, des1 = sift.compute(gray1, kps1)
     udes1 = np.uint8(des1)
 
     kps2 = [cv.KeyPoint(x=f[0][0], y=f[0][1], _size=20) for f in points2]
-    kps2, des2 = sift.compute(gray2, kps2)  # ??????????????????????gray2
+    kps2, des2 = sift.compute(gray2, kps2)
     udes2 = np.uint8(des2)
 
     matches = matcher(udes1, udes2)
 
     # Sort them in the order of their distance.
     matches = sorted(matches, key=lambda x: x.distance)
-
     # Extract location of good matches
     points1 = np.zeros((len(matches), 2), dtype=np.float32)
     points2 = np.zeros((len(matches), 2), dtype=np.float32)
@@ -104,19 +90,5 @@ def get_matching_points_harris(im1, im2, matcher):
         points1[i, :] = kps1[match.queryIdx].pt
         points2[i, :] = kps2[match.trainIdx].pt
 
-    # # Draw first 10 matches.
-    # # img3 = cv.drawMatches(im1, kps1, im2, kps2, matches, None, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-    # # plt.imshow(img3), plt.show()
-    #
-    # print("___",points1,"____")
-    # print("___",points2,"___")
-    #return points1, points2
+    return points1, points2
 
-    x=np.array([[2,6],[3,2],[2,6],[3,2]])
-    return x,x
-
-
-
-
-    #
-    #

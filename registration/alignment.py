@@ -57,6 +57,7 @@ def get_points(ref_image_link, image_link, ref_image_points, matching_points, ma
     if len(points1) < 4 or len(points2) < 4:
         raise PointLengthError("not enough points to find homography")
 
+
     # Find homography
     homography, mask = cv.findHomography(points1, points2, cv.RANSAC)
 
