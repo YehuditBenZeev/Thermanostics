@@ -90,19 +90,4 @@ def get_matching_points_harris(im1, im2, matcher):
         points1[i, :] = kps1[match.queryIdx].pt
         points2[i, :] = kps2[match.trainIdx].pt
 
-    # Draw first 10 matches.
-    # img3 = cv.drawMatches(im1, kps1, im2, kps2, matches, None, flags=cv.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-    # plt.imshow(img3), plt.show()
-
     return points1, points2
-
-
-if __name__ == "__main__":
-    print(cv.__version__)
-    ref_image_link = "../images/514 RF.bmp"
-    image_link = "../images/509 RF.bmp"
-    im_reference = cv.imread(ref_image_link, cv.IMREAD_COLOR)
-    # print(im_reference.shape)
-    im = cv.imread(image_link, cv.IMREAD_COLOR)
-    # im1Reg, h = get_homography_good_features(im_reference, im)
-   # im1Reg, h = get_homography_harris(ref_image_link, image_link)

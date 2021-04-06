@@ -10,7 +10,6 @@ def get_homography(im1, im2):
     surf = cv2.xfeatures2d.SURF_create()
 
 
-
 def get_homography_good_features(im1, im2):
     pass
 

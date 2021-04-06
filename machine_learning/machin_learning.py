@@ -36,7 +36,7 @@ class Machine:
         print(self.array_l, self.array_p)
         tn, fp, fn, tp = confusion_matrix(self.array_l, self.array_p, labels=["sick", "healthy"]).ravel()
         print(tn, fp, fn, tp)
-        score = np.array([0.3, 0.2, 0.4])  # ?????????
+        score = np.array([0.3, 0.2, 0.4])
         fpr, tpr, threshold = metrics.roc_curve(self.array_l, score, pos_label="sick")
         print(fpr, tpr, threshold)
         auc(fpr, tpr)

@@ -83,7 +83,6 @@ class FindingHotspotsInPicture:
             cv2.circle(self.img, i, 4, (0, 0,250), 2)
         Ip.show_pic(self.img, "p")
 
-# ____________________________________________________________________________________________
     def write_in_file(self):
         # field names
         fields = ['X', 'Y']

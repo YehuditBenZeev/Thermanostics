@@ -1,5 +1,5 @@
 import cv2
-from Thermanostics.imageProcessing import ConvertGrayScale as Ip, Finger as Fn
+from image_processing import convert_gray_scale as Ip, finger as Fn
 import numpy as np
 
 

@@ -67,9 +67,6 @@ def get_matching_points_good_features(im1, im2, matcher):
 
 
 def get_matching_points_harris(im1, im2, matcher):
-    # im1 = cv.imread(link1, cv.IMREAD_COLOR)
-    # im2 = cv.imread(link2, cv.IMREAD_COLOR)
-
     points1 = harris_corner_detection(im1)
     points2 = harris_corner_detection(im2)
 

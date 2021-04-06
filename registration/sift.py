@@ -1,6 +1,5 @@
 import cv2 as cv
 import numpy as np
-from matplotlib import pylab as plt
 from registration.harris import harris_corner_detection
 
 MAX_MATCHES = 500

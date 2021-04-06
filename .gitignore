@@ -11,3 +11,4 @@ try.py
 *.xlsx
 *.txt
 *.tfm
+registration/create_data.py
