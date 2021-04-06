@@ -5,7 +5,6 @@ import argparse
 from PIL import Image, ImageOps
 from matplotlib import pylab as plt
 from skimage.feature import peak_local_max
-
 # Displaying an image
 from scipy import ndimage
 import scipy.ndimage.filters as filters
@@ -391,3 +390,9 @@ def rotate_image(rotate_img):
 
     show_pic(aaa, "done to rotate")'''
 
+
+if __name__ == '__main__':
+
+    link = '../images/511 RF.bmp'
+    edge(link)
+    plt.show(block=True)

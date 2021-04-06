@@ -21,6 +21,7 @@ def distance_to_line(point, p1, p2):
 def midpoint(p1, p2):
     return int((p1[0] + p2[0]) / 2), int((p1[1] + p2[1]) / 2)
 
+
 class ObjectTest:
     def __init__(self, image, point1, point2, point3, point4, point5, point6, point7, point8, point9):
         self.image = cv2.imread(image)
@@ -56,9 +57,9 @@ class ObjectTest:
 
 
 if __name__ == "__main__":
-    with open("plam.csv", 'r') as f:
+    with open("palm.csv", 'r') as f:
         for row in csv.DictReader(f):
-            a = ObjectTest(row['numberPlam'], (int(row['X1']), int(row['Y1'])), (int(row['X2']), int(row['Y2'])),
+            a = ObjectTest(row['numberPalm'], (int(row['X1']), int(row['Y1'])), (int(row['X2']), int(row['Y2'])),
                            (int(row['X3']), int(row['Y3'])),
                            (int(row['X4']), int(row['Y4'])), (int(row['X5']), int(row['Y5'])),
                            (int(row['X6']), int(row['Y6'])),
@@ -66,6 +67,9 @@ if __name__ == "__main__":
                            (int(row['X9']), int(row['Y9'])))
             a.trapeze()
             a.div_coordinates()
+
+            # iterate on all hat spots and call find_new_location read points from file (no file right now - yous mock data)
+
             # Go through all the points of the palm in area 0
             print(a.find_new_location((301, 200)))
             print(a.find_new_location((319, 129)))

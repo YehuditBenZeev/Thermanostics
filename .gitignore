@@ -1,5 +1,5 @@
 /.idea/
-imageProcessing/__pycache__/
+image_processing/__pycache__/
 __pycache__/
 
 images/
@@ -11,3 +11,4 @@ try.py
 *.xlsx
 *.txt
 *.tfm
+registration/create_data.py

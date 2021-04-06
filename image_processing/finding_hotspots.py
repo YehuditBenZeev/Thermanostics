@@ -1,7 +1,8 @@
 import numpy as np
 import cv2
 import csv
-from Thermanostics.imageProcessing import ConvertGrayScale as Ip
+from image_processing import convert_gray_scale as Ip
+
 
 class FindingHotspotsInPicture:
     def __init__(self, processed_image):
@@ -14,6 +15,7 @@ class FindingHotspotsInPicture:
     def find_max_point_in_area(self, p1, p2, p3, p4, value):
         jo = 0
         io = 0
+
         # check if point in area
         if p1 < 0:
             return 0, 0, 0
@@ -33,7 +35,8 @@ class FindingHotspotsInPicture:
                         io = i
                         jo = j
             return temp, io, jo
-    # #scan all picture funk get point and define to area
+
+    # scan all picture funk get point and define to area
     def scan_image(self, i, j, k, value):
         l1 = i - k
         l2 = j - k
@@ -45,6 +48,7 @@ class FindingHotspotsInPicture:
             return 0, 0, 0
         else:
             return valuePoint, io, ji
+
     def pass_on_image(self, size):
         flag1 = False
         flag2 = False
@@ -78,7 +82,7 @@ class FindingHotspotsInPicture:
         for i in self.pointList:
             cv2.circle(self.img, i, 4, (0, 0,250), 2)
         Ip.show_pic(self.img, "p")
-# ____________________________________________________________________________________________
+
     def write_in_file(self):
         # field names
         fields = ['X', 'Y']
@@ -87,7 +91,7 @@ class FindingHotspotsInPicture:
         for point in self.pointList:
              row = [point[0], point[1]]
              rows.append(row)
-        filename = "algoritm_point.csv"
+        filename = "algorithm_point.csv"
 
         # writing to csv file
         with open(filename, 'w') as csvfile:
