@@ -39,7 +39,7 @@ def get_matching_points(im1, im2):
 
     return points1, points2
 def get_matching_points_good_features(im1, im2):
-    
+
     sift = cv.SIFT_create()
     gray1 = cv.cvtColor(im1, cv.COLOR_BGR2GRAY)
     gray2 = cv.cvtColor(im2, cv.COLOR_BGR2GRAY)

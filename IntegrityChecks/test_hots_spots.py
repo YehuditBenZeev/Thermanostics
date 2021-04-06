@@ -42,6 +42,7 @@ class Tests:
     def __init__(self, expected_points, detected_points):
         self.expected_points = read_from_file(expected_points)  # algoritm
         self.detected_points = read_from_file(detected_points)  # alona
+        print(self.expected_points)
 
     def check_detected_points(self):
         # open file to read point
@@ -61,7 +62,7 @@ class Tests:
         true_negative = 0  # The algorithm predicted that there is no hot spot and no
         false_positive = 0  # The algorithm predicted that there is no hotspot but there is
         false_negative = 0  # The algorithm predicted that there is no hotspot but there is
-        print(self.detected_points[0].boolean, self.expected_points[0].boolean)
+        #print(self.detected_points[0].boolean, self.expected_points[0].boolean)
 
         for point in self.detected_points:
             if point.boolean:
