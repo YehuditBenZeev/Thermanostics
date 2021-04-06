@@ -2,9 +2,9 @@ from __future__ import print_function
 from matplotlib import pylab as plt
 from registration import alignment
 import numpy as np
-from IntegrityChecks import registration_data as data
+from integrity_checks import registration_data as data
 from registration import matcher
-from customizedExceptions.customized_exceptions import PointLengthError, HomographyError
+from customized_exceptions.customized_exceptions import PointLengthError, HomographyError
 from registration import orb
 from registration import akaze
 from registration import sift

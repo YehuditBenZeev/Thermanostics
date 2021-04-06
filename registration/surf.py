@@ -7,7 +7,7 @@ GOOD_MATCH_PERCENT = 0.15
 
 def get_homography(im1, im2):
     """Given two images, returns the matches"""
-    #surf = cv2.xfeatures2d.SURF_create()
+    surf = cv2.xfeatures2d.SURF_create()
 
 
 

@@ -1,7 +1,7 @@
 import csv
 import pandas as pd
 import cv2 as cv
-from imageProcessing import FindingHotspotsInPicture as find
+from image_processing import finding_hotspots as find
 
 
 MAX_DIST = 5

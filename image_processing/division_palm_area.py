@@ -1,5 +1,5 @@
 import cv2
-from imageProcessing import ConvertGrayScale as Ip, Palm as P
+from image_processing import convert_gray_scale as Ip, palm as P
 import numpy as np
 
 

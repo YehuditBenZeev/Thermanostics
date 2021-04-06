@@ -1,13 +1,13 @@
 import matplotlib.pyplot as plt
 import os
 import glob
-from imageProcessing import ConvertGrayScale
+from image_processing import convert_gray_scale
 
 
 def main():
     image_list = glob.glob(os.path.join("../images", '*.bmp'))
     for image_path in image_list:
-        ConvertGrayScale.edge(image_path)
+        convert_gray_scale.edge(image_path)
     plt.show(block=True)
 
 

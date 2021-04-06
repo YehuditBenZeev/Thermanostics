@@ -4,7 +4,7 @@ import numpy as np
 from matplotlib import pylab as plt
 import os
 import glob
-from customizedExceptions.customized_exceptions import PointLengthError, HomographyError
+from customized_exceptions.customized_exceptions import PointLengthError, HomographyError
 
 MAX_MATCHES = 1000
 GOOD_MATCH_PERCENT = 0.2

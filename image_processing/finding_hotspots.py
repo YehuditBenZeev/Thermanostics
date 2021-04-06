@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 import csv
-from imageProcessing import ConvertGrayScale as Ip
+from image_processing import convert_gray_scale as Ip
 
 
 class FindingHotspotsInPicture:
