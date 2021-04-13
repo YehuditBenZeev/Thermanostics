@@ -19,6 +19,9 @@ class SortHotPointInArea:
         self.array_area_4 = []
         self.array_area_5 = []
         self.listContours = []
+        self.find_listContours()
+
+    def find_listContours(self):
         ret, thresh = cv.threshold(self.image, 127, 255, 0)
         contours, hierarchy = cv.findContours(thresh, 1, 2)
         for x in contours:
@@ -27,9 +30,8 @@ class SortHotPointInArea:
                     self.listContours.append((m[0], m[1]))
 
     def area_0(self):
-        self.divPalm.find_area_0()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomLeft, self.divPalm.bottomRight]) #change to palm point
+            polygon = self.divPalm.polygon_array[0] #change to palm point
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
@@ -37,9 +39,8 @@ class SortHotPointInArea:
                     self.findPoint.pointList.remove(p)
 
     def area_1(self):
-        self.divPalm.find_finger_1()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomRight,self.divPalm.bottomLeft])
+            polygon = self.divPalm.polygon_array[1]
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
@@ -47,9 +48,8 @@ class SortHotPointInArea:
                     self.findPoint.pointList.remove(p)
 
     def area_2(self):
-        self.divPalm.find_finger_2()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopLeFt, self.divPalm.bottomRight, self.divPalm.bottomLeft])
+            polygon = self.divPalm.polygon_array[2]
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
@@ -57,9 +57,8 @@ class SortHotPointInArea:
                     self.findPoint.pointList.remove(p)
 
     def area_3(self):
-        self.divPalm.find_finger_3()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomRight, self.divPalm.bottomLeft])
+            polygon = self.divPalm.polygon_array[3]
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
@@ -67,9 +66,8 @@ class SortHotPointInArea:
                     self.findPoint.pointList.remove(p)
 
     def area_4(self):
-        self.divPalm.find_finger_4()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomRight, self.divPalm.bottomLeft])
+            polygon = self.divPalm.polygon_array[4]
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
@@ -77,9 +75,8 @@ class SortHotPointInArea:
                     self.findPoint.pointList.remove(p)
 
     def area_5(self):
-        self.divPalm.find_finger_5()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomLeft, self.divPalm.bottomRight])
+            polygon = self.divPalm.polygon_array[5]
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
