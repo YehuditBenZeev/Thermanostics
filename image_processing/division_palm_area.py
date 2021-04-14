@@ -14,12 +14,12 @@ class DivisionPalmArea:
         self.find_areas()
 
     def find_areas(self):
-        self.find_area_0(self)
-        self.find_area_1(self)
-        self.find_area_2(self)
-        self.find_area_3(self)
-        self.find_area_4(self)
-        self.find_area_5(self)
+        self.find_area_0()
+        self.find_area_1()
+        self.find_area_2()
+        self.find_area_3()
+        self.find_area_4()
+        self.find_area_5()
 
     def find_area_0(self):
         TopLeFt = self.palmIn.finger1.bottom_2

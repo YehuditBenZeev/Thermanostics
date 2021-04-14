@@ -20,6 +20,7 @@ class SortHotPointInArea:
         self.array_area_5 = []
         self.listContours = []
         self.find_listContours()
+        self.sort_hotspots()
 
     def find_listContours(self):
         ret, thresh = cv.threshold(self.image, 127, 255, 0)
@@ -28,6 +29,14 @@ class SortHotPointInArea:
             for p in x:
                 for m in p:
                     self.listContours.append((m[0], m[1]))
+
+    def sort_hotspots(self):
+        self.area_0()
+        self.area_1()
+        self.area_2()
+        self.area_3()
+        self.area_4()
+        self.area_5()
 
     def area_0(self):
         for p in self.findPoint.pointList:

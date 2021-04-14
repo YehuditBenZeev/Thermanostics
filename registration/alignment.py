@@ -75,5 +75,4 @@ def run_test():
 
 
 if __name__ == '__main__':
-    print(type(None))
-
+    run_test()
