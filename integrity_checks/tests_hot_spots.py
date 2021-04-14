@@ -61,7 +61,7 @@ class TestsHotSpots:
         true_negative = 0  # The algorithm predicted that there is no hot spot and there isn't
         false_positive = 0  # The algorithm predicted that there is a hotspot but there isn't
         false_negative = 0  # The algorithm predicted that there is no hotspot but there is
-        print(self.detected_points[0].boolean, self.expected_points[0].boolean)
+        #print(self.detected_points[0].boolean, self.expected_points[0].boolean)
 
         for point in self.detected_points:
             if point.boolean:

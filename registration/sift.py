@@ -27,9 +27,14 @@ def get_matching_points(im1, im2, matcher):
         points2[i, :] = kps2[match.trainIdx].pt
 
     return points1, points2
+<<<<<<< HEAD
+def get_matching_points_good_features(im1, im2):
+
+=======
 
 
 def get_matching_points_good_features(im1, im2, matcher):
+>>>>>>> 153e949dd5cf134c68fc8691d904de10eef8e7a3
     sift = cv.SIFT_create()
 
     gray1 = cv.cvtColor(im1, cv.COLOR_BGR2GRAY)
