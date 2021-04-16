@@ -7,11 +7,10 @@ from image_processing import convert_gray_scale as Ip
 
 class SortHotPointInArea:
 
-    def __init__(self, processed_image, path, size):
+    def __init__(self, processed_image, division_obj, hotspots_ob):
         self.image = processed_image
-        self.divPalm = Div.DivisionPalmArea(processed_image, path)
-        self.findPoint = Find.FindingHotspotsInPicture(processed_image)
-        self.findPoint.pass_on_image(size)
+        self.divPalm = division_obj
+        self.findPoint = hotspots_ob
         self.array_area_0 = []
         self.array_area_1 = []
         self.array_area_2 = []

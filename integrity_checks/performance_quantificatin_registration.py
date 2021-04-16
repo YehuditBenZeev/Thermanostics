@@ -29,7 +29,7 @@ def quantification():
         ref_image_link = "../images/514 RF.bmp"
         ref_image_points = data.image_ref['RF_514']
         try:
-            points = alignment.get_points(ref_image_link, image_path, ref_image_points, sift.get_matching_points_harris, matcher.matcher_BFMatcher)
+            points = alignment.get_points(ref_image_link, image_path, ref_image_points, fast.get_matching_points, matcher.matcher_BFMatcher)
         except (PointLengthError, HomographyError) as e:
             print(i, ": ", e)
             dict_counter_514['fails'] += 1
@@ -58,7 +58,7 @@ def quantification():
             ref_image_points = data.image_ref['LB_514']
 
         try:
-            points = alignment.get_points(ref_image_link, image_path, ref_image_points, sift.get_matching_points_harris, matcher.matcher_BFMatcher)
+            points = alignment.get_points(ref_image_link, image_path, ref_image_points, fast.get_matching_points, matcher.matcher_BFMatcher)
         except (PointLengthError, HomographyError) as e:
             print(i, ": ", e)
             dict_counter['fails'] += 1
@@ -74,7 +74,7 @@ def quantification():
     plt.show(block=True)
     with open("registration.txt", "a") as out_file:
 
-        out_file.write("sift - harris - matcher matcher_BFMatcher:\n\tregistration test 514 image result.\n")
+        out_file.write("fast - matcher matcher_BFMatcher:\n\tregistration test 514 image result.\n")
         for item in dict_counter_514:
             out_file.write("\t\t" + item + ": " + str(dict_counter_514[item]) + "\n")
         percent_514 = (dict_counter_514['true'] / (dict_counter_514['true'] + dict_counter_514['false']))*100 if (dict_counter_514['true'] + dict_counter_514['false']) else 0
