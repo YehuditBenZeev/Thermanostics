@@ -7,11 +7,10 @@ from image_processing import convert_gray_scale as Ip
 
 class SortHotPointInArea:
 
-    def __init__(self, processed_image, path, size):
+    def __init__(self, processed_image, division_obj, hotspots_ob):
         self.image = processed_image
-        self.divPalm = Div.DivisionPalmArea(processed_image, path)
-        self.findPoint = Find.FindingHotspotsInPicture(processed_image)
-        self.findPoint.pass_on_image(size)
+        self.divPalm = division_obj
+        self.findPoint = hotspots_ob
         self.array_area_0 = []
         self.array_area_1 = []
         self.array_area_2 = []
@@ -19,6 +18,10 @@ class SortHotPointInArea:
         self.array_area_4 = []
         self.array_area_5 = []
         self.listContours = []
+        self.find_listContours()
+        self.sort_hotspots()
+
+    def find_listContours(self):
         ret, thresh = cv.threshold(self.image, 127, 255, 0)
         contours, hierarchy = cv.findContours(thresh, 1, 2)
         for x in contours:
@@ -26,10 +29,17 @@ class SortHotPointInArea:
                 for m in p:
                     self.listContours.append((m[0], m[1]))
 
+    def sort_hotspots(self):
+        self.area_0()
+        self.area_1()
+        self.area_2()
+        self.area_3()
+        self.area_4()
+        self.area_5()
+
     def area_0(self):
-        self.divPalm.find_area_0()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomLeft, self.divPalm.bottomRight]) #change to palm point
+            polygon = self.divPalm.polygon_array[0] #change to palm point
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
@@ -37,9 +47,8 @@ class SortHotPointInArea:
                     self.findPoint.pointList.remove(p)
 
     def area_1(self):
-        self.divPalm.find_finger_1()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomRight,self.divPalm.bottomLeft])
+            polygon = self.divPalm.polygon_array[1]
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
@@ -47,9 +56,8 @@ class SortHotPointInArea:
                     self.findPoint.pointList.remove(p)
 
     def area_2(self):
-        self.divPalm.find_finger_2()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopLeFt, self.divPalm.bottomRight, self.divPalm.bottomLeft])
+            polygon = self.divPalm.polygon_array[2]
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
@@ -57,9 +65,8 @@ class SortHotPointInArea:
                     self.findPoint.pointList.remove(p)
 
     def area_3(self):
-        self.divPalm.find_finger_3()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomRight, self.divPalm.bottomLeft])
+            polygon = self.divPalm.polygon_array[3]
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
@@ -67,9 +74,8 @@ class SortHotPointInArea:
                     self.findPoint.pointList.remove(p)
 
     def area_4(self):
-        self.divPalm.find_finger_4()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomRight, self.divPalm.bottomLeft])
+            polygon = self.divPalm.polygon_array[4]
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
@@ -77,9 +83,8 @@ class SortHotPointInArea:
                     self.findPoint.pointList.remove(p)
 
     def area_5(self):
-        self.divPalm.find_finger_5()
         for p in self.findPoint.pointList:
-            polygon = Polygon([self.divPalm.TopLeFt, self.divPalm.TopRight, self.divPalm.bottomLeft, self.divPalm.bottomRight])
+            polygon = self.divPalm.polygon_array[5]
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:

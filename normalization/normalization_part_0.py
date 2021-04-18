@@ -22,19 +22,19 @@ def midpoint(p1, p2):
     return int((p1[0] + p2[0]) / 2), int((p1[1] + p2[1]) / 2)
 
 
-class ObjectTest:
-    def __init__(self, image, point1, point2, point3, point4, point5, point6, point7, point8, point9):
-        self.image = cv2.imread(image)
-        self.point1 = point1
-        self.point2 = point2
-        self.point3 = point3
-        self.point4 = point4
-        self.point5 = point5
-        self.point6 = point6
-        self.point7 = point7
-        self.point8 = point8
-        self.point9 = point9
-        self.mid_root = midpoint(self.point1, self.point2)
+class NormalizationPart0:
+    def __init__(self, image_path, point_list):
+        self.image = cv2.imread(image_path)
+        self.point1 = point_list[0]
+        self.point2 = point_list[1]
+        self.point3 = point_list[2]
+        self.point4 = point_list[3]
+        self.point5 = point_list[4]
+        self.point6 = point_list[5]
+        self.point7 = point_list[6]
+        self.point8 = point_list[7]
+        self.point9 = point_list[8]
+        self.mid_root = midpoint(self.point1, self.point2)  # point1 and point the wrist points
 
     def trapeze(self):
         pts = np.array(
@@ -50,16 +50,23 @@ class ObjectTest:
 
     # Finding the position of a point for the new coordinates
     def find_new_location(self, point):
-        cv2.circle(self.image, point, 4, (255, 56, 0), 2)
+        # cv2.circle(self.image, point, 4, (255, 56, 0), 2)
         distance_x = round(distance_to_line(point, self.point7, self.mid_root), 2)
         distance_y = round(distance_to_line(point, self.point1, self.point2), 2)
         return distance_x, distance_y
+
+    def find_new_locations(self, point_list):
+        normalized_points = []
+        for point in point_list:
+            normalized_points.append(self.find_new_location(point))
+
+        return normalized_points
 
 
 if __name__ == "__main__":
     with open("palm.csv", 'r') as f:
         for row in csv.DictReader(f):
-            a = ObjectTest(row['numberPalm'], (int(row['X1']), int(row['Y1'])), (int(row['X2']), int(row['Y2'])),
+            a = NormalizationPart0(row['imagePath'], (int(row['X1']), int(row['Y1'])), (int(row['X2']), int(row['Y2'])),
                            (int(row['X3']), int(row['Y3'])),
                            (int(row['X4']), int(row['Y4'])), (int(row['X5']), int(row['Y5'])),
                            (int(row['X6']), int(row['Y6'])),

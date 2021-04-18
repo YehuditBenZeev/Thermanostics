@@ -27,6 +27,7 @@ def get_bw_image(path):
     return Ip.edge_detecting(bw_image, 100, 500)
 
 
+# change to fined edge points with registration
 class Palm:
 
     def __init__(self, processed_image, path):

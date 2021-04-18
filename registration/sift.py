@@ -28,7 +28,6 @@ def get_matching_points(im1, im2, matcher):
 
     return points1, points2
 
-
 def get_matching_points_good_features(im1, im2, matcher):
     sift = cv.SIFT_create()
 
