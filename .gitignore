@@ -6,9 +6,9 @@ images/
 *.bmp
 *.jpg
 *.PNG
-*.csv
 try.py
 *.xlsx
 *.txt
 *.tfm
 registration/create_data.py
+algorithm_point.csv
