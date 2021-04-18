@@ -17,11 +17,11 @@ class Finding_Hotspots:
         # check if point in area
         if p1 < 0 or p2 < 0 or p3 > h or p4 > w:
             return -1, -1, -1
-        temp = 0
+        temp = 255
         for i in range(p1, p3): #run on small matrix
             for j in range(p2, p4):
                 x = self.image[i][j]
-                if x > temp:
+                if x < temp:
                     temp = x
                     io = i
                     jo = j
@@ -37,7 +37,7 @@ class Finding_Hotspots:
         return self.find_max_point_in_area(l1, l2, l3,l4)
 
     def pass_on_image(self, size):
-        number_tuple = (0, 0)  # remove
+
         h,w = self.image.shape  # remove
         img = np.array(self.image)  # remove
 
@@ -47,16 +47,16 @@ class Finding_Hotspots:
         flag4 = False
         for i in range(1, h - 1): # pass on image
             for j in range(1, w - 1):
-                    if self.image[i-1][j] < self.image[i][j]:
+                    if self.image[i-1][j] > self.image[i][j]:
                         flag1 = True
-                    if self.image[i][j-1] < self.image[i][j]:
+                    if self.image[i][j-1] > self.image[i][j]:
                         flag2 = True
-                    if self.image[i+1][j] < self.image[i][j]:
+                    if self.image[i+1][j] > self.image[i][j]:
                         flag3 = True
-                    if self.image[i][j+1] < self.image[i][j]:
+                    if self.image[i][j+1] > self.image[i][j]:
                         flag4 = True
                     if flag1 & flag2 & flag3 & flag4:#point is eXstrim point and higher then the threshold
-                        if self.image[i][j] > 127:
+                        if self.image[i][j] < 127:
                             valuePoint, x, y = self.scan_image(i, j, size)  # sage1: return max poin in area in size 10 of point
                             if not((valuePoint == -1) & (x == -1) & (y == -1)) :
                                 number_tuple = (y, x)
@@ -92,7 +92,7 @@ class Finding_Hotspots:
             csvwriter.writerows(rows)
         return filename
 if __name__ == '__main__':
-    im=cv2.imread("Im1.jpg")
+    im=cv2.imread("new.bmp")
     gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
     hotspot=Finding_Hotspots(gray)
     hotspot.pass_on_image(20)
