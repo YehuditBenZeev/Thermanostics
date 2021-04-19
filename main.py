@@ -1,6 +1,7 @@
 import cv2 as cv
 import csv
 import os
+import numpy as np
 from image_processing.finding_hotspots import FindingHotspots
 from image_processing.division_palm_area import DivisionPalmArea
 from image_processing.sort_hotspots import SortHotPointInArea
@@ -113,6 +114,21 @@ def normalized_hotspots(file_name):
                              (int(row['X2-5']), int(row['Y2-5'])),
                              (int(row['X3-5']), int(row['Y3-5'])),
                              (int(row['X4-5']), int(row['Y4-5']))]
+
+            pts = np.array(area_0_points, np.int32).reshape((-1, 1, 2))
+            cv.polylines(gray_image, [pts], True, (0, 0, 0), 2)
+            pts = np.array(area_1_points, np.int32).reshape((-1, 1, 2))
+            cv.polylines(gray_image, [pts], True, (0, 0, 0), 2)
+            pts = np.array(area_2_points, np.int32).reshape((-1, 1, 2))
+            cv.polylines(gray_image, [pts], True, (0, 0, 0), 2)
+            pts = np.array(area_3_points, np.int32).reshape((-1, 1, 2))
+            cv.polylines(gray_image, [pts], True, (0, 0, 0), 2)
+            pts = np.array(area_4_points, np.int32).reshape((-1, 1, 2))
+            cv.polylines(gray_image, [pts], True, (0, 0, 0), 2)
+            pts = np.array(area_5_points, np.int32).reshape((-1, 1, 2))
+            cv.polylines(gray_image, [pts], True, (0, 0, 0), 2)
+            cv.imshow("polygon", gray_image)
+            cv.waitKey(0)
 
             area_points_list = [area_0_points, area_1_points, area_2_points, area_3_points, area_4_points, area_5_points]
 

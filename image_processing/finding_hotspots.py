@@ -59,7 +59,6 @@ class FindingHotspots:
                     flag4 = True
                 if flag1 & flag2 & flag3 & flag4:  # point is eXstrim point and higher then the threshold
                     # if self.image[i][j] < 127:
-                        print("65")
                         valuePoint, x, y = self.scan_image(i, j, size)  # sage1: return max poin in area in size 10 of point
                         if not((valuePoint == -1) & (x == -1) & (y == -1)):
                             number_tuple = (y, x)
