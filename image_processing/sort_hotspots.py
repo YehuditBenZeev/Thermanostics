@@ -1,4 +1,5 @@
 import cv2 as cv
+import numpy as np
 from image_processing import division_palm_area as Div, finding_hotspots as Find
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
@@ -61,7 +62,7 @@ class SortHotPointInArea:
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
-                    self.array_area_1.append(p)
+                    self.array_area_2.append(p)
                     self.findPoint.pointList.remove(p)
 
     def area_3(self):
@@ -70,7 +71,7 @@ class SortHotPointInArea:
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
-                    self.array_area_1.append(p)
+                    self.array_area_3.append(p)
                     self.findPoint.pointList.remove(p)
 
     def area_4(self):
@@ -79,7 +80,7 @@ class SortHotPointInArea:
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
-                    self.array_area_1.append(p)
+                    self.array_area_4.append(p)
                     self.findPoint.pointList.remove(p)
 
     def area_5(self):
@@ -88,7 +89,7 @@ class SortHotPointInArea:
             point = Point(p)
             if polygon.contains(point):
                 if p not in self.listContours:
-                    self.array_area_1.append(p)
+                    self.array_area_5.append(p)
                     self.findPoint.pointList.remove(p)
 
         # shows results

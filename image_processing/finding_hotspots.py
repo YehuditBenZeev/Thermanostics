@@ -1,6 +1,5 @@
 import numpy as np
 import cv2
-import csv
 from image_processing import convert_gray_scale as Ip
 
 
@@ -19,9 +18,8 @@ class FindingHotspots:
         # check if point in area
         if p1 < 0 or p2 < 0 or p3 > h or p4 > w:
             return -1, -1, -1
-
-        temp = 0
-        for i in range(p1, p3):  # run on small matrix
+        temp = 255
+        for i in range(p1, p3): #run on small matrix
             for j in range(p2, p4):
                 x = self.image[i][j]
                 if x < temp:
@@ -49,21 +47,20 @@ class FindingHotspots:
         flag4 = False
         for i in range(1, h - 1):  # pass on image
             for j in range(1, w - 1):
-                if self.image[i-1][j] > self.image[i][j]:
-                    flag1 = True
-                if self.image[i][j-1] > self.image[i][j]:
-                    flag2 = True
-                if self.image[i+1][j] > self.image[i][j]:
-                    flag3 = True
-                if self.image[i][j+1] > self.image[i][j]:
-                    flag4 = True
-                if flag1 & flag2 & flag3 & flag4:  # point is eXstrim point and higher then the threshold
-                    # if self.image[i][j] < 127:
-                        print("65")
-                        valuePoint, x, y = self.scan_image(i, j, size)  # sage1: return max poin in area in size 10 of point
-                        if not((valuePoint == -1) & (x == -1) & (y == -1)):
-                            number_tuple = (y, x)
-                            self.pointList.append(number_tuple)
+                    if self.image[i-1][j] > self.image[i][j]:
+                        flag1 = True
+                    if self.image[i][j-1] > self.image[i][j]:
+                        flag2 = True
+                    if self.image[i+1][j] > self.image[i][j]:
+                        flag3 = True
+                    if self.image[i][j+1] > self.image[i][j]:
+                        flag4 = True
+                    if flag1 & flag2 & flag3 & flag4:#point is eXstrim point and higher then the threshold
+                        if self.image[i][j] < 127:
+                            valuePoint, x, y = self.scan_image(i, j, size)  # sage1: return max poin in area in size 10 of point
+                            if not((valuePoint == -1) & (x == -1) & (y == -1)) :
+                                number_tuple = (y, x)
+                                self.pointList.append(number_tuple)
                         flag1 = False
                         flag2 = False
                         flag3 = False
@@ -73,28 +70,6 @@ class FindingHotspots:
         for i in self.pointList:
             cv2.circle(img, i, 4, (0, 0, 250), 2)
         Ip.show_pic(img, "p")
-
-    def write_to_file(self):
-        # field names
-        fields = ['X', 'Y']
-        # data rows of csv file
-        rows = []
-        for point in self.pointList:
-             row = [point[0], point[1]]
-             rows.append(row)
-        filename = "algorithm_point.csv"
-
-        # writing to csv file
-        with open(filename, 'w') as csvfile:
-            # creating a csv writer object
-            csvwriter = csv.writer(csvfile)
-
-            # writing the fields
-            csvwriter.writerow(fields)
-
-            # writing the data rows
-            csvwriter.writerows(rows)
-        return filename
 
 
 if __name__ == '__main__':
