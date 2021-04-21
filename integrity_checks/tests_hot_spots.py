@@ -17,7 +17,6 @@ def convert_exel_csv(exelFile):
     read_file = pd.read_excel(exelFile)
     read_file.to_csv("Test.csv", index=None, header=True)
     df = pd.DataFrame(pd.read_csv("Test.csv"))
-    print(df)
 
 
 def read_from_file(file_name):  # reads csv files
